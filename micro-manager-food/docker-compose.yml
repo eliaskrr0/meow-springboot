@@ -1,0 +1,12 @@
+services:
+        micro-manager-food:
+                image: micro-manager-food:latest
+                build:
+                        context: .
+                env_file:
+                        - .env
+                environment:
+                        - SPRING_PROFILES_ACTIVE=local
+                ports:
+                        - "8080:8080"
+                restart: unless-stopped
