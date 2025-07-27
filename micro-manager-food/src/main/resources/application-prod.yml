@@ -1,0 +1,36 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: micro-manager-food
+
+  config:
+    activate:
+      on-profile: prod
+
+  app:
+    env-guard: true # Protege para que no usemos un entorno distinto a LOCAL
+
+  datasource:
+    url: ${PROD_DB_URL}
+    username: ${PROD_DB_USER}
+    password: ${PROD_DB_PASS}
+
+  jpa:
+    generate-ddl: false
+    open-in-view: false # Evita el renderizado de HTML
+    hibernate:
+      ddl-auto: none
+    show-sql: false  # En producción se suele desactivar
+
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        default_schema: ${PROD_DB_SCHEMA}
+
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+    schemas: ${PROD_DB_SCHEMA}
+    validate-on-migrate: true
