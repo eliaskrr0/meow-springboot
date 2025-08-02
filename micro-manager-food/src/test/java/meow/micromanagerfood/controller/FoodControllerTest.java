@@ -23,7 +23,7 @@ import static org.mockito.Mockito.when;
 class FoodControllerTest {
 
     @Mock
-    FoodService foodService;
+    private FoodService foodService;
 
     @InjectMocks
     private FoodController foodController;

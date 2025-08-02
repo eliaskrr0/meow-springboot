@@ -10,7 +10,7 @@ import java.util.List;
 
 @Service
 public class FoodServiceImpl implements FoodService {
-    private FoodRepository foodRepository;
+    private final FoodRepository foodRepository;
 
     public FoodServiceImpl(FoodRepository foodRepository) {
         this.foodRepository = foodRepository;

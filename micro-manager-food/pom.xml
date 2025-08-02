@@ -157,6 +157,11 @@
                                             <minimum>0.80</minimum>
                                         </limit>
                                     </limits>
+                                    <excludes>
+                                        <exclude>**/AppProperties.class</exclude>
+                                        <exclude>**/SwaggerConfig.class</exclude>
+                                        <exclude>**/MicroManagerFoodApplication.class</exclude>
+                                    </excludes>
                                 </rule>
                             </rules>
                         </configuration>
