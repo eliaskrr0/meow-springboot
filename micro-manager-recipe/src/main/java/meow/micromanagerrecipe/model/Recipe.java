@@ -26,11 +26,12 @@ public class Recipe {
     @Pattern(message = ValidationMessages.COLUMN_NAME_PATTERN, regexp = "^[A-Za-z\u00C1\u00C9\u00CD\u00D3\u00DA\u00E1\u00E9\u00ED\u00F3\u00FA\u00D1\u00F1 ]+$")
     @Size(message = ValidationMessages.COLUMN_NAME_SIZE, min = 2, max = 50)
     @NotBlank(message = ValidationMessages.COLUMN_NAME_NOT_BLANK)
-    @Column(name = "name")
+    @Column(name = "name", unique = true, nullable = false)
     private String name;
 
     @Schema(description = ValidationMessages.COLUMN_AMOUNT_SCHEMA, example = "100")
     @NotNull(message = ValidationMessages.COLUMN_AMOUNT_REQUIRED)
     @Positive(message = ValidationMessages.COLUMN_AMOUNT_POSITIVE)
+    @Column(name = "amount", nullable = false)
     private int amount;
 }
