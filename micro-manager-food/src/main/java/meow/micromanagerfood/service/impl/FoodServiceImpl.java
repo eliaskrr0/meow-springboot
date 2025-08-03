@@ -16,7 +16,6 @@ public class FoodServiceImpl implements FoodService {
         this.foodRepository = foodRepository;
     }
 
-
     @Override
     public Food saveFood(Food food) {
         return foodRepository.save(food);
@@ -28,11 +27,16 @@ public class FoodServiceImpl implements FoodService {
     }
 
     @Override
+    public List<Food> searchFoodByName(String name) {
+        return foodRepository.findByNameContainingIgnoreCase(name);
+    }
+
+    @Override
     public void updateFood(Food food) {
-        if (foodRepository.existsById(food.getId())) {
+        if (foodRepository.existsById(food.getIdFood())) {
             foodRepository.save(food);
         } else {
-            throw new ResourceNotFoundException(food.getId());
+            throw new ResourceNotFoundException(food.getIdFood());
         }
     }
 

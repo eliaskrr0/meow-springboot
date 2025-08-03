@@ -1,5 +1,5 @@
 CREATE TABLE tb_food (
-    id BIGSERIAL PRIMARY KEY,
+    idFood BIGSERIAL PRIMARY KEY,
     name VARCHAR(50) NOT NULL,
     brand VARCHAR(50) NOT NULL,
     unit_measure VARCHAR(10) NOT NULL,

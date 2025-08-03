@@ -74,7 +74,7 @@ class FoodControllerTest {
         // Assert
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(updatedFood, response.getBody());
-        assertEquals(foodId, updatedFood.getId());
+        assertEquals(foodId, updatedFood.getIdFood());
         verify(foodService).updateFood(updatedFood);
     }
 

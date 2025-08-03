@@ -58,13 +58,13 @@ class FoodServiceImplTest {
     void updateFood_shouldUpdate_whenFoodExists() {
         // Arrange
         Food food = new Food(1L, "Pollo", "Carnicería", "gr", 100, 100, 200, 50, 370);
-        when(foodRepository.existsById(food.getId())).thenReturn(true);
+        when(foodRepository.existsById(food.getIdFood())).thenReturn(true);
 
         // Act
         foodService.updateFood(food);
 
         // Assert
-        verify(foodRepository).existsById(food.getId());
+        verify(foodRepository).existsById(food.getIdFood());
         verify(foodRepository).save(food);
     }
 
@@ -72,11 +72,11 @@ class FoodServiceImplTest {
     void updateFood_shouldThrowResourceNotFoundException_whenFoodDoesNotExists() {
         // Arrange
         Food food = new Food(1L, "Pollo", "Carnicería", "gr", 100, 100, 200, 50, 370);
-        when(foodRepository.existsById(food.getId())).thenReturn(false);
+        when(foodRepository.existsById(food.getIdFood())).thenReturn(false);
 
         // Act & Assert
         assertThrows(ResourceNotFoundException.class, () -> foodService.updateFood(food));
-        verify(foodRepository).existsById(food.getId());
+        verify(foodRepository).existsById(food.getIdFood());
         verify(foodRepository, never()).save(food);
 
 
@@ -86,14 +86,14 @@ class FoodServiceImplTest {
     void deleteFood_shouldDelete_whenFoodExists() {
         // Arrange
         Food food = new Food(1L, "Pollo", "Carnicería", "gr", 100, 100, 200, 50, 370);
-        when(foodRepository.existsById(food.getId())).thenReturn(true);
+        when(foodRepository.existsById(food.getIdFood())).thenReturn(true);
 
         // Act
-        foodService.deleteFood(food.getId());
+        foodService.deleteFood(food.getIdFood());
 
         // Assert
-        verify(foodRepository).existsById(food.getId());
-        verify(foodRepository).deleteById(food.getId());
+        verify(foodRepository).existsById(food.getIdFood());
+        verify(foodRepository).deleteById(food.getIdFood());
 
     }
 
@@ -101,12 +101,12 @@ class FoodServiceImplTest {
     void deleteFood_shouldThrowResourceNotFoundException_whenFoodDoesNotExists() {
         // Arrange
         Food food = new Food(1L, "Pollo", "Carnicería", "gr", 100, 100, 200, 50, 370);
-        when(foodRepository.existsById(food.getId())).thenReturn(false);
+        when(foodRepository.existsById(food.getIdFood())).thenReturn(false);
 
         // Act & Assert
-        assertThrows(ResourceNotFoundException.class, () -> foodService.deleteFood(food.getId()));
-        verify(foodRepository).existsById(food.getId());
-        verify(foodRepository, never()).deleteById(food.getId());
+        assertThrows(ResourceNotFoundException.class, () -> foodService.deleteFood(food.getIdFood()));
+        verify(foodRepository).existsById(food.getIdFood());
+        verify(foodRepository, never()).deleteById(food.getIdFood());
 
 
     }

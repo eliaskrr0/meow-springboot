@@ -5,6 +5,8 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import meow.common.dto.FoodDTO;
+import meow.micromanagerfood.mapper.FoodMapper;
 import meow.micromanagerfood.model.Food;
 import meow.micromanagerfood.service.FoodService;
 import org.springframework.http.HttpStatus;
@@ -18,15 +20,24 @@ import java.util.List;
 @RequestMapping("/api/foods")
 public class FoodController {
     private final FoodService foodService;
+    private final FoodMapper foodMapper;
 
-    public FoodController(FoodService foodService) {
+    public FoodController(FoodService foodService, FoodMapper foodMapper) {
         this.foodService = foodService;
+        this.foodMapper = foodMapper;
     }
 
     @Operation(summary = "Obtiene todos los alimentos")
     @GetMapping("/list")
     public ResponseEntity<List<Food>> getAllFoods() {
         return ResponseEntity.ok(foodService.getAllFoods());
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<List<FoodDTO>> searchFoodsByName(@RequestParam String name) {
+        List<Food> foods = foodService.searchFoodByName(name);
+        List<FoodDTO> dtoList = foodMapper.toDTOList(foods);
+        return ResponseEntity.ok(dtoList);
     }
 
     @ApiResponse(responseCode = "201", description = "Alimento creado correctamente")
@@ -43,7 +54,7 @@ public class FoodController {
     @Operation(summary = "Actualiza alimento filtrando por su ID")
     @PutMapping("/update/{id}")
     public ResponseEntity<Food> updateFood(@PathVariable Long id, @Valid @RequestBody Food food) {
-        food.setId(id);
+        food.setIdFood(id);
         foodService.updateFood(food);
         return ResponseEntity.ok(food);
     }
