@@ -33,6 +33,7 @@ public class FoodController {
         return ResponseEntity.ok(foodService.getAllFoods());
     }
 
+    @Operation(summary = "Obtiene el alimento filtrado por el nombre")
     @GetMapping("/search")
     public ResponseEntity<List<FoodDTO>> searchFoodsByName(@RequestParam String name) {
         List<Food> foods = foodService.searchFoodByName(name);

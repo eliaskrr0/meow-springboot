@@ -1,5 +1,7 @@
 package meow.micromanagerfood.controller;
 
+import meow.common.dto.FoodDTO;
+import meow.micromanagerfood.mapper.FoodMapper;
 import meow.micromanagerfood.model.Food;
 import meow.micromanagerfood.service.FoodService;
 import org.junit.jupiter.api.Test;
@@ -24,6 +26,8 @@ class FoodControllerTest {
 
     @Mock
     private FoodService foodService;
+    @Mock
+    private FoodMapper foodMapper;
 
     @InjectMocks
     private FoodController foodController;
@@ -44,6 +48,28 @@ class FoodControllerTest {
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(mockFoods, response.getBody());
         verify(foodService).getAllFoods();
+    }
+
+    @Test
+    void searchFoodsByName() {
+        // Arrange
+        String name = "Pollo";
+        Food food = new Food(1L, "Pollo", "Carnicería", "gr", 100, 100, 200, 50, 370);
+        FoodDTO foodDTO = new FoodDTO(1L, "Leche", "Hacendado", "ml", 250, 17, 0, 2, 112);
+        List<Food> foods = List.of(food);
+        List<FoodDTO> dtoList = List.of(foodDTO);
+
+        when(foodService.searchFoodByName(name)).thenReturn(foods);
+        when(foodMapper.toDTOList(foods)).thenReturn(dtoList);
+
+        // Act
+        ResponseEntity<List<FoodDTO>> response = foodController.searchFoodsByName(name);
+
+        // Arrange
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals(dtoList, response.getBody());
+        verify(foodService).searchFoodByName(name);
+        verify(foodMapper).toDTOList(foods);
     }
 
     @Test

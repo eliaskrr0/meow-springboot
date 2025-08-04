@@ -55,6 +55,23 @@ class FoodServiceImplTest {
     }
 
     @Test
+    void searchFoodByName() {
+        // Arrange
+        Food food1 = new Food(1L, "Pollo", "Carnicería", "gr", 100, 100, 200, 50, 370);
+        Food food2 = new Food(1L, "Leche", "Hacendado", "ml", 250, 17, 0, 2, 112);
+        List<Food> mockFoods = List.of(food1, food2);
+        String name = "pollo";
+
+        when(foodRepository.findByNameContainingIgnoreCase(name)).thenReturn(mockFoods);
+
+        // Act
+        List<Food> result = foodService.searchFoodByName(name);
+
+        // Assert
+        assertEquals(mockFoods, result);
+    }
+
+    @Test
     void updateFood_shouldUpdate_whenFoodExists() {
         // Arrange
         Food food = new Food(1L, "Pollo", "Carnicería", "gr", 100, 100, 200, 50, 370);
