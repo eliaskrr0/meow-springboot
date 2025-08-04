@@ -1,5 +1,5 @@
 CREATE TABLE tb_recipe (
-    idRecipe BIGSERIAL PRIMARY KEY,
+    id_recipe BIGSERIAL PRIMARY KEY,
     name VARCHAR(50) NOT NULL UNIQUE,
     amount INT NOT NULL
 );

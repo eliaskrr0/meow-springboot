@@ -19,7 +19,7 @@ public class Food {
     @Schema(description = ValidationMessages.COLUMN_ID_SCHEMA, accessMode = Schema.AccessMode.READ_ONLY)
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(nullable = false)
+    @Column(name = "id_food", nullable = false)
     private Long idFood;
 
     @Schema(description = ValidationMessages.COLUMN_NAME_SCHEMA, example = "Manzana")

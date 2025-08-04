@@ -19,7 +19,7 @@ public class Recipe {
     @Schema(description = ValidationMessages.COLUMN_ID_SCHEMA, accessMode = Schema.AccessMode.READ_ONLY)
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(nullable = false)
+    @Column(name = "id_recipe", nullable = false)
     private Long idRecipe;
 
     @Schema(description = ValidationMessages.COLUMN_NAME_SCHEMA, example = "Pastel de manzana")
