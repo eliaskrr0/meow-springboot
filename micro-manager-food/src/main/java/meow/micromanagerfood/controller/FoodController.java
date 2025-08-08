@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Tag(name = "Food Controller", description = "Operaciones CRUD para alimentos")
+@Tag(name = "Food", description = "API de alimentos")
 @RestController
 @RequestMapping("/api/foods")
 public class FoodController {
@@ -33,7 +33,7 @@ public class FoodController {
         return ResponseEntity.ok(foodService.getAllFoods());
     }
 
-    @Operation(summary = "Obtiene el alimento filtrado por el nombre")
+    @Operation(summary = "Obtiene un alimento por su nombre")
     @GetMapping("/search")
     public ResponseEntity<List<FoodDTO>> searchFoodsByName(@RequestParam String name) {
         List<Food> foods = foodService.searchFoodByName(name);
@@ -42,7 +42,7 @@ public class FoodController {
     }
 
     @ApiResponse(responseCode = "201", description = "Alimento creado correctamente")
-    @Operation(summary = "Agrega un nuevo alimento")
+    @Operation(summary = "Guarda un alimento")
     @PostMapping("/add")
     public ResponseEntity<Food> saveFood(Food food) {
         return ResponseEntity.status(HttpStatus.CREATED).body(foodService.saveFood(food));

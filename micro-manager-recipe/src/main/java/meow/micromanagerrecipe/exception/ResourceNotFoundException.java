@@ -1,4 +1,4 @@
-package meow.micromanagerfood.exception;
+package meow.micromanagerrecipe.exception;
 
 public class ResourceNotFoundException extends RuntimeException {
     public ResourceNotFoundException(Object id) {
