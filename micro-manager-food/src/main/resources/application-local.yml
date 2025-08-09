@@ -27,3 +27,5 @@ spring:
     locations: classpath:db/migration
     schemas: meow
     table: flyway_schema_history_food
+    baseline-on-migrate: true
+    baseline-version: 0    # Ajustar según la versión inicial requerida

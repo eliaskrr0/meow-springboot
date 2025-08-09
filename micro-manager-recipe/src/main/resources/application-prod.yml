@@ -41,6 +41,8 @@ spring:
     locations: classpath:db/migration
     schemas: ${PROD_DB_SCHEMA}
     table: ${PROD_DB_TABLE_FLYWAY_HISTORY_NAME}
+    baseline-on-migrate: true
+    baseline-version: 0    # Ajustar según la versión inicial requerida
     validate-on-migrate: true
 
 external:
