@@ -1,0 +1,12 @@
+services:
+        micro-manager-recipe:
+                image: micro-manager-recipe:latest
+                build:
+                        context: .
+                env_file:
+                        - .env
+                environment:
+                        - SPRING_PROFILES_ACTIVE=local
+                ports:
+                        - "8081:8081"
+                restart: unless-stopped
