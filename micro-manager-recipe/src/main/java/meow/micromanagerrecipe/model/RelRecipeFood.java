@@ -15,7 +15,7 @@ import lombok.Setter;
 @Setter
 @Entity
 @Table(name = "tb_rel_recipe_food")
-@IdClass(RelRecipeFood.class)
+@IdClass(RelRecipeFoodId.class)
 public class RelRecipeFood {
     @Id
     @Column(name = "id_rel_recipe_food", nullable = false)

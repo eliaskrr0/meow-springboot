@@ -27,6 +27,11 @@ public class FoodServiceImpl implements FoodService {
     }
 
     @Override
+    public Food getFoodById(Long id) {
+        return foodRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException(id));
+    }
+
+    @Override
     public List<Food> searchFoodByName(String name) {
         return foodRepository.findByNameContainingIgnoreCase(name);
     }

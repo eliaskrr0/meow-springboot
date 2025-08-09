@@ -33,6 +33,12 @@ public class FoodController {
         return ResponseEntity.ok(foodService.getAllFoods());
     }
 
+    @Operation(summary = "Obtiene un alimento por su ID")
+    @GetMapping("/{id}")
+    public ResponseEntity<Food> getFoodById(@PathVariable Long id) {
+        return ResponseEntity.ok(foodService.getFoodById(id));
+    }
+
     @Operation(summary = "Obtiene un alimento por su nombre")
     @GetMapping("/search")
     public ResponseEntity<List<FoodDTO>> searchFoodsByName(@RequestParam String name) {
