@@ -1,5 +1,6 @@
 package meow.micromanagerrecipe.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
@@ -8,6 +9,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import meow.micromanagerrecipe.utils.messages.ValidationMessages;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -34,4 +38,13 @@ public class Recipe {
     @Positive(message = ValidationMessages.COLUMN_AMOUNT_POSITIVE)
     @Column(name = "amount", nullable = false)
     private int amount;
+
+    @JsonManagedReference
+    @OneToMany(mappedBy = "recipe", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<RelRecipeFood> ingredients = new ArrayList<>();
+
+    @Schema(description = ValidationMessages.COLUMN_FOOD_ID_SCHEMA, example = "1")
+    @NotNull(message = ValidationMessages.COLUMN_FOOD_ID_REQUIRED)
+    @Column(name = "id_food", nullable = false)
+    private Long foodId;
 }

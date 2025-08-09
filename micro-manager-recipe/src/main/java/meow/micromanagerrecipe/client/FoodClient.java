@@ -10,5 +10,8 @@ import java.util.List;
 @FeignClient(name = "food-service", url = "${external.food-service.url}")
 public interface FoodClient {
     @GetMapping("api/foods/search")
-    List<FoodDTO> sarchFoodsByName(@RequestParam("name") String name);
+    List<FoodDTO> searchFoodsByName(@RequestParam("name") String name);
+
+    @GetMapping("api/foods/{id}")
+    FoodDTO getFoodById(@RequestParam("id") Long id);
 }

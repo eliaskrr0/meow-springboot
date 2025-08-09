@@ -1,5 +1,6 @@
 package meow.micromanagerrecipe.service.impl;
 
+import feign.FeignException;
 import meow.common.dto.FoodDTO;
 import meow.micromanagerrecipe.client.FoodClient;
 import meow.micromanagerrecipe.exception.ResourceNotFoundException;
@@ -22,11 +23,16 @@ public class RecipeServiceImpl implements RecipeService {
 
     @Override
     public List<FoodDTO> searchFoodsByName(String name) {
-        return foodClient.sarchFoodsByName(name);
+        return foodClient.searchFoodsByName(name);
     }
 
     @Override
     public Recipe saveRecipe(Recipe recipe) {
+        try {
+            foodClient.getFoodById(recipe.getFoodId());
+        } catch (FeignException e) {
+            throw new ResourceNotFoundException(recipe.getFoodId());
+        }
         return recipeRepository.save(recipe);
     }
 
@@ -43,6 +49,9 @@ public class RecipeServiceImpl implements RecipeService {
     @Override
     public void updateRecipe(Recipe recipe) {
         if (recipeRepository.existsById(recipe.getIdRecipe())) {
+            if (recipe.getIngredients() != null) {
+                recipe.getIngredients().forEach(ingredient -> ingredient.setRecipe(recipe));
+            }
             recipeRepository.save(recipe);
         } else {
             throw new ResourceNotFoundException(recipe.getIdRecipe());

@@ -7,6 +7,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import meow.micromanagerrecipe.model.Recipe;
 import meow.micromanagerrecipe.service.RecipeService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -36,9 +37,9 @@ public class RecipeController {
 
     @ApiResponse(responseCode = "201", description = "Receta creada correctamente")
     @Operation(summary = "Guarda una receta")
-    @PutMapping("/add")
+    @PostMapping("/add")
     public ResponseEntity<Recipe> saveRecipe(Recipe recipe) {
-        return ResponseEntity.ok(recipeService.saveRecipe(recipe));
+        return ResponseEntity.status(HttpStatus.CREATED).body(recipeService.saveRecipe(recipe));
     }
 
     @ApiResponses({
