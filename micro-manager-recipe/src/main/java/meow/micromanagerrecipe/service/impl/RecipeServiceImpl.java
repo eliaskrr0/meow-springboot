@@ -5,7 +5,7 @@ import meow.common.dto.FoodDTO;
 import meow.micromanagerrecipe.client.FoodClient;
 import meow.micromanagerrecipe.exception.ResourceNotFoundException;
 import meow.micromanagerrecipe.model.Recipe;
-import meow.micromanagerrecipe.repository.RecipeRepositoy;
+import meow.micromanagerrecipe.repository.RecipeRepository;
 import meow.micromanagerrecipe.service.RecipeService;
 import org.springframework.stereotype.Service;
 
@@ -14,9 +14,9 @@ import java.util.List;
 @Service
 public class RecipeServiceImpl implements RecipeService {
     private final FoodClient foodClient;
-    private final RecipeRepositoy recipeRepository;
+    private final RecipeRepository recipeRepository;
 
-    public RecipeServiceImpl(FoodClient foodClient, RecipeRepositoy recipeRepository) {
+    public RecipeServiceImpl(FoodClient foodClient, RecipeRepository recipeRepository) {
         this.foodClient = foodClient;
         this.recipeRepository = recipeRepository;
     }
