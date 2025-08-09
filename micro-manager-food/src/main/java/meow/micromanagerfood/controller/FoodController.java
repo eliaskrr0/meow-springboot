@@ -50,7 +50,7 @@ public class FoodController {
     @ApiResponse(responseCode = "201", description = "Alimento creado correctamente")
     @Operation(summary = "Guarda un alimento")
     @PostMapping("/add")
-    public ResponseEntity<Food> saveFood(Food food) {
+    public ResponseEntity<Food> saveFood(@Valid @RequestBody Food food) {
         return ResponseEntity.status(HttpStatus.CREATED).body(foodService.saveFood(food));
     }
 

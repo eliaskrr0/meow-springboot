@@ -38,7 +38,7 @@ public class RecipeController {
     @ApiResponse(responseCode = "201", description = "Receta creada correctamente")
     @Operation(summary = "Guarda una receta")
     @PostMapping("/add")
-    public ResponseEntity<Recipe> saveRecipe(Recipe recipe) {
+    public ResponseEntity<Recipe> saveRecipe(@Valid @RequestBody Recipe recipe) {
         return ResponseEntity.status(HttpStatus.CREATED).body(recipeService.saveRecipe(recipe));
     }
 
