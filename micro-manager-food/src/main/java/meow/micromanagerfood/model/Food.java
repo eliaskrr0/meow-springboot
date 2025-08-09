@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import meow.micromanagerfood.model.enums.UnitMeasure;
 import meow.micromanagerfood.model.enums.converter.UnitMeasureConverter;
 import meow.micromanagerfood.utils.messages.ValidationMessages;
 
@@ -41,7 +42,7 @@ public class Food {
     @NotNull(message = ValidationMessages.COLUMN_UNIT_MEASURE_REQUIRED)
     @Column(name = "unit_measure", nullable = false)
     @Convert(converter = UnitMeasureConverter.class)
-    private String unitMeasure;
+    private UnitMeasure unitMeasure;
 
     @Schema(description = ValidationMessages.COLUMN_AMOUNT_SCHEMA, example = "100")
     @NotNull(message = ValidationMessages.COLUMN_AMOUNT_REQUIRED)
