@@ -1,6 +1,7 @@
 package meow.micromanagerrecipe.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
@@ -19,6 +20,7 @@ public class RelRecipeFood {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_rel_recipe_food", nullable = false)
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Long idRelRecipeFood;
 
     @JsonBackReference
