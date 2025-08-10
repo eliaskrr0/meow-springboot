@@ -1,0 +1,1 @@
+CREATE INDEX IF NOT EXISTS idx_tb_recipe_id_food ON tb_recipe (id_food);
