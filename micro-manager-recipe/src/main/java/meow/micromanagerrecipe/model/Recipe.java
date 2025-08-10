@@ -1,6 +1,7 @@
 package meow.micromanagerrecipe.model;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
@@ -42,6 +43,7 @@ public class Recipe {
     @Schema(description = ValidationMessages.COLUMN_FOOD_ID_SCHEMA, example = "1")
     @NotNull(message = ValidationMessages.COLUMN_FOOD_ID_REQUIRED)
     @Column(name = "id_food", nullable = false)
+    @JsonProperty("id_food")
     private Long idFood;
 
     @Version

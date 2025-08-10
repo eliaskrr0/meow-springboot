@@ -3,6 +3,7 @@ package meow.micromanagerfood.controller;
 import meow.common.dto.FoodDTO;
 import meow.micromanagerfood.mapper.FoodMapper;
 import meow.micromanagerfood.model.Food;
+import meow.micromanagerfood.model.enums.UnitMeasure;
 import meow.micromanagerfood.service.FoodService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -35,8 +36,8 @@ class FoodControllerTest {
     @Test
     void getAllFoods() {
         // Arrange
-        Food food1 = new Food(1L, "Pollo", "Carnicería", "gr", 100, 100, 200, 50, 370);
-        Food food2 = new Food(1L, "Leche", "Hacendado", "ml", 250, 17, 0, 2, 112);
+        Food food1 = new Food(1L, "Pollo", "Carnicería", UnitMeasure.GR, 100, 100, 200, 50, 370);
+        Food food2 = new Food(1L, "Leche", "Hacendado", UnitMeasure.ML, 250, 17, 0, 2, 112);
         List<Food> mockFoods = List.of(food1, food2);
 
         when(foodService.getAllFoods()).thenReturn(mockFoods);
@@ -54,8 +55,8 @@ class FoodControllerTest {
     void searchFoodsByName() {
         // Arrange
         String name = "Pollo";
-        Food food = new Food(1L, "Pollo", "Carnicería", "gr", 100, 100, 200, 50, 370);
-        FoodDTO foodDTO = new FoodDTO(1L, "Leche", "Hacendado", "ml", 250, 17, 0, 2, 112);
+        Food food = new Food(1L, "Pollo", "Carnicería", UnitMeasure.GR, 100, 100, 200, 50, 370);
+        FoodDTO foodDTO = new FoodDTO(1L, "Leche", "Hacendado", UnitMeasure.ML.toString(), 250, 17, 0, 2, 112);
         List<Food> foods = List.of(food);
         List<FoodDTO> dtoList = List.of(foodDTO);
 
@@ -75,7 +76,7 @@ class FoodControllerTest {
     @Test
     void saveFood() {
         // Arrange
-        Food food1 = new Food(1L, "Pollo", "Carnicería", "gr", 100, 100, 200, 50, 370);
+        Food food1 = new Food(1L, "Pollo", "Carnicería", UnitMeasure.GR, 100, 100, 200, 50, 370);
 
         when(foodService.saveFood(food1)).thenReturn(food1);
 
@@ -91,29 +92,29 @@ class FoodControllerTest {
     @Test
     void updateFood() {
         // Arrange
-        Long foodId = 1L;
-        Food updatedFood = new Food(foodId, "Atún", "Calvo", "gr", 80, 22, 0, 3, 110);
+        Long idFood = 1L;
+        Food updatedFood = new Food(idFood, "Atún", "Calvo", UnitMeasure.GR, 80, 22, 0, 3, 110);
 
         // Act
-        ResponseEntity<Food> response = foodController.updateFood(foodId, updatedFood);
+        ResponseEntity<Food> response = foodController.updateFood(idFood, updatedFood);
 
         // Assert
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(updatedFood, response.getBody());
-        assertEquals(foodId, updatedFood.getIdFood());
+        assertEquals(idFood, updatedFood.getIdFood());
         verify(foodService).updateFood(updatedFood);
     }
 
     @Test
     void deleteFood() {
         // Arrange
-        Long foodId = 1L;
+        Long idFood = 1L;
 
         // Act
-        ResponseEntity<Void> response = foodController.deleteFood(foodId);
+        ResponseEntity<Void> response = foodController.deleteFood(idFood);
 
         // Assert
         assertEquals(HttpStatus.NO_CONTENT, response.getStatusCode());
-        verify(foodService).deleteFood(foodId);
+        verify(foodService).deleteFood(idFood);
     }
 }
