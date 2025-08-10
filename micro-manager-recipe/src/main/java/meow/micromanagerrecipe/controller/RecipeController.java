@@ -5,6 +5,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import meow.common.dto.FoodDTO;
 import meow.micromanagerrecipe.model.Recipe;
 import meow.micromanagerrecipe.service.RecipeService;
 import org.springframework.http.HttpStatus;
@@ -33,6 +34,12 @@ public class RecipeController {
     @GetMapping("/search")
     public ResponseEntity<List<Recipe>> searchRecipesByName(String name) {
         return ResponseEntity.ok(recipeService.searchRecipesByName(name));
+    }
+
+    @Operation(summary = "Obtiene los alimentos de una receta")
+    @GetMapping("/{id}/foods")
+    public ResponseEntity<List<FoodDTO>> getFoodsByRecipe(@PathVariable Long id) {
+        return ResponseEntity.ok(recipeService.getFoodsByRecipe(id));
     }
 
     @ApiResponse(responseCode = "201", description = "Receta creada correctamente")

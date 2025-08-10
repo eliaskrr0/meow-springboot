@@ -53,6 +53,25 @@ public class RecipeServiceImpl implements RecipeService {
         return recipeRepository.findByNameContainingIgnoreCase(name);
     }
 
+    @Transactional(readOnly = true)
+    @Override
+    public List<FoodDTO> getFoodsByRecipe(Long idRecipe) {
+        Recipe recipe = recipeRepository.findById(idRecipe)
+                .orElseThrow(() -> new ResourceNotFoundException(idRecipe));
+        if (recipe.getIngredients() == null) {
+            return List.of();
+        }
+        return recipe.getIngredients().stream()
+                .map(ingredient -> {
+                    try {
+                        return foodClient.getFoodById(ingredient.getIdFood());
+                    } catch (FeignException e) {
+                        throw new ResourceNotFoundException(ingredient.getIdFood());
+                    }
+                })
+                .toList();
+    }
+
     @Transactional
     @Override
     public void updateRecipe(Recipe recipe) {
