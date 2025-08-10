@@ -2,9 +2,11 @@ package meow.micromanagerrecipe.service.impl;
 
 import feign.FeignException;
 import meow.common.dto.FoodDTO;
+import meow.common.dto.RecipeNutritionDTO;
 import meow.micromanagerrecipe.client.FoodClient;
 import meow.micromanagerrecipe.exception.ResourceNotFoundException;
 import meow.micromanagerrecipe.model.Recipe;
+import meow.micromanagerrecipe.model.RelRecipeFood;
 import meow.micromanagerrecipe.repository.RecipeRepository;
 import meow.micromanagerrecipe.service.RecipeService;
 import org.springframework.stereotype.Service;
@@ -41,6 +43,39 @@ public class RecipeServiceImpl implements RecipeService {
             });
         }
         return recipeRepository.save(recipe);
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public RecipeNutritionDTO calculateRecipeNutrition(Recipe recipe) {
+        if (recipe.getIngredients() == null || recipe.getIngredients().isEmpty()) {
+            return new RecipeNutritionDTO();
+        }
+        int totalProtein = 0;
+        int totalCarbs = 0;
+        int totalFat = 0;
+        int totalCalories = 0;
+        int totalAmount = 0;
+        String unitMeasure = null;
+
+        for (RelRecipeFood ingredient : recipe.getIngredients()) {
+            FoodDTO food;
+            try {
+                food = foodClient.getFoodById(ingredient.getIdFood());
+            } catch (FeignException e) {
+                throw new ResourceNotFoundException(ingredient.getIdFood());
+            }
+            if (unitMeasure == null) {
+                unitMeasure = food.getUnitMeasure();
+            }
+            double factor = (double) ingredient.getAmount() / food.getAmount();
+            totalProtein += Math.round(food.getProteinAmount() * factor);
+            totalCarbs += Math.round(food.getCarbsAmount() * factor);
+            totalFat += Math.round(food.getFatAmount() * factor);
+            totalCalories += Math.round(food.getCalories() * factor);
+            totalAmount += ingredient.getAmount();
+        }
+        return new RecipeNutritionDTO(unitMeasure, totalAmount, totalProtein, totalCarbs, totalFat, totalCalories);
     }
 
     @Override

@@ -6,6 +6,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import meow.common.dto.FoodDTO;
+import meow.common.dto.RecipeNutritionDTO;
 import meow.micromanagerrecipe.model.Recipe;
 import meow.micromanagerrecipe.service.RecipeService;
 import org.springframework.http.HttpStatus;
@@ -47,6 +48,12 @@ public class RecipeController {
     @PostMapping("/add")
     public ResponseEntity<Recipe> saveRecipe(@Valid @RequestBody Recipe recipe) {
         return ResponseEntity.status(HttpStatus.CREATED).body(recipeService.saveRecipe(recipe));
+    }
+
+    @Operation(summary = "Calcula los datos nutricionales de una receta")
+    @PostMapping("/calculate")
+    public ResponseEntity<RecipeNutritionDTO> calculateRecipe(@RequestBody Recipe recipe) {
+        return ResponseEntity.ok(recipeService.calculateRecipeNutrition(recipe));
     }
 
     @ApiResponses({
