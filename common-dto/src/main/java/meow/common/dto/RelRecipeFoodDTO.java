@@ -10,9 +10,11 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class RelRecipeFoodDTO {
     @Schema(example = "1")
-    private Long idRecipeIngredient;
+    private Long idRelRecipeFood;
 
-    @Schema(example = "2")
+    private RecipeDTO recipeDTO;
+
+    @Schema(example = "1")
     private Long idFood;
 
     @Schema(example = "100")

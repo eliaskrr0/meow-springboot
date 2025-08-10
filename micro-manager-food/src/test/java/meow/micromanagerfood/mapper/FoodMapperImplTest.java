@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import meow.common.dto.FoodDTO;
 import meow.micromanagerfood.model.Food;
+import meow.micromanagerfood.model.enums.UnitMeasure;
 import org.junit.jupiter.api.Test;
 import org.mapstruct.factory.Mappers;
 
@@ -16,7 +17,7 @@ class FoodMapperImplTest {
     @Test
     void toDTO_isNotNull_shouldMapFood() {
         // Arrange
-        Food food = new Food(1L, "Pollo", "Carnicería", "gr", 100, 20, 0, 5, 120);
+        Food food = new Food(1L, "Pollo", "Carnicería", UnitMeasure.GR, 100, 20, 0, 5, 120);
 
         // Act
         FoodDTO dto = foodMapper.toDTO(food);
@@ -49,8 +50,8 @@ class FoodMapperImplTest {
     @Test
     void toDTOList_isNotNull_shouldMapListOfFood() {
         // Arrange
-        Food f1 = new Food(1L, "Pollo", "Carnicería", "gr", 100, 20, 0, 5, 120);
-        Food f2 = new Food(2L, "Manzana", "Hacendado", "gr", 80, 0, 22, 0, 88);
+        Food f1 = new Food(1L, "Pollo", "Carnicería", UnitMeasure.GR, 100, 20, 0, 5, 120);
+        Food f2 = new Food(2L, "Manzana", "Hacendado", UnitMeasure.GR, 80, 0, 22, 0, 88);
         List<Food> foods = List.of(f1, f2);
 
         // Act

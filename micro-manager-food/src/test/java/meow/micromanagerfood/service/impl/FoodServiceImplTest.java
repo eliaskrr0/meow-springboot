@@ -2,6 +2,7 @@ package meow.micromanagerfood.service.impl;
 
 import meow.micromanagerfood.exception.ResourceNotFoundException;
 import meow.micromanagerfood.model.Food;
+import meow.micromanagerfood.model.enums.UnitMeasure;
 import meow.micromanagerfood.repository.FoodRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -26,7 +27,7 @@ class FoodServiceImplTest {
     @Test
     void saveFood() {
         // Arrange
-        Food food = new Food(1L, "Pollo", "Carnicería", "gr", 100, 100, 200, 50, 370);
+        Food food = new Food(1L, "Pollo", "Carnicería", UnitMeasure.GR, 100, 100, 200, 50, 370);
         when(foodRepository.save(food)).thenReturn(food);
 
         // Act
@@ -41,8 +42,8 @@ class FoodServiceImplTest {
     @Test
     void getAllFoods() {
         // Arrange
-        Food food1 = new Food(1L, "Pollo", "Carnicería", "gr", 100, 100, 200, 50, 370);
-        Food food2 = new Food(1L, "Leche", "Hacendado", "ml", 250, 17, 0, 2, 112);
+        Food food1 = new Food(1L, "Pollo", "Carnicería", UnitMeasure.GR, 100, 100, 200, 50, 370);
+        Food food2 = new Food(1L, "Leche", "Hacendado", UnitMeasure.ML, 250, 17, 0, 2, 112);
         List<Food> mockFoods = List.of(food1, food2);
 
         when(foodRepository.findAll()).thenReturn(mockFoods);
@@ -57,8 +58,8 @@ class FoodServiceImplTest {
     @Test
     void searchFoodByName() {
         // Arrange
-        Food food1 = new Food(1L, "Pollo", "Carnicería", "gr", 100, 100, 200, 50, 370);
-        Food food2 = new Food(1L, "Leche", "Hacendado", "ml", 250, 17, 0, 2, 112);
+        Food food1 = new Food(1L, "Pollo", "Carnicería", UnitMeasure.GR, 100, 100, 200, 50, 370);
+        Food food2 = new Food(1L, "Leche", "Hacendado", UnitMeasure.ML, 250, 17, 0, 2, 112);
         List<Food> mockFoods = List.of(food1, food2);
         String name = "pollo";
 
@@ -74,7 +75,7 @@ class FoodServiceImplTest {
     @Test
     void updateFood_shouldUpdate_whenFoodExists() {
         // Arrange
-        Food food = new Food(1L, "Pollo", "Carnicería", "gr", 100, 100, 200, 50, 370);
+        Food food = new Food(1L, "Pollo", "Carnicería", UnitMeasure.GR, 100, 100, 200, 50, 370);
         when(foodRepository.existsById(food.getIdFood())).thenReturn(true);
 
         // Act
@@ -88,7 +89,7 @@ class FoodServiceImplTest {
     @Test
     void updateFood_shouldThrowResourceNotFoundException_whenFoodDoesNotExists() {
         // Arrange
-        Food food = new Food(1L, "Pollo", "Carnicería", "gr", 100, 100, 200, 50, 370);
+        Food food = new Food(1L, "Pollo", "Carnicería", UnitMeasure.GR, 100, 100, 200, 50, 370);
         when(foodRepository.existsById(food.getIdFood())).thenReturn(false);
 
         // Act & Assert
@@ -102,7 +103,7 @@ class FoodServiceImplTest {
     @Test
     void deleteFood_shouldDelete_whenFoodExists() {
         // Arrange
-        Food food = new Food(1L, "Pollo", "Carnicería", "gr", 100, 100, 200, 50, 370);
+        Food food = new Food(1L, "Pollo", "Carnicería", UnitMeasure.GR, 100, 100, 200, 50, 370);
         when(foodRepository.existsById(food.getIdFood())).thenReturn(true);
 
         // Act
@@ -117,7 +118,7 @@ class FoodServiceImplTest {
     @Test
     void deleteFood_shouldThrowResourceNotFoundException_whenFoodDoesNotExists() {
         // Arrange
-        Food food = new Food(1L, "Pollo", "Carnicería", "gr", 100, 100, 200, 50, 370);
+        Food food = new Food(1L, "Pollo", "Carnicería", UnitMeasure.GR, 100, 100, 200, 50, 370);
         when(foodRepository.existsById(food.getIdFood())).thenReturn(false);
 
         // Act & Assert

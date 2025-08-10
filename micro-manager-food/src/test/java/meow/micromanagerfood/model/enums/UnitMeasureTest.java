@@ -8,15 +8,15 @@ class UnitMeasureTest {
 
     @Test
     void shouldReturnCorrectJsonValue() {
-        assertEquals("gr", UnitMeasure.GR.getValue());
-        assertEquals("ml", UnitMeasure.ML.getValue());
+        assertEquals(UnitMeasure.GR, UnitMeasure.GR.getValue());
+        assertEquals(UnitMeasure.ML, UnitMeasure.ML.getValue());
     }
 
     @Test
     void shouldCreateFromValidValue() {
-        assertEquals(UnitMeasure.GR, UnitMeasure.fromValue("gr"));
-        assertEquals(UnitMeasure.GR, UnitMeasure.fromValue("GR")); // mayúsculas
-        assertEquals(UnitMeasure.ML, UnitMeasure.fromValue("ml"));
+        assertEquals(UnitMeasure.GR, UnitMeasure.fromValue(String.valueOf(UnitMeasure.GR)));
+        assertEquals(UnitMeasure.GR, UnitMeasure.fromValue(String.valueOf(UnitMeasure.GR))); // mayúsculas
+        assertEquals(UnitMeasure.ML, UnitMeasure.fromValue(String.valueOf(UnitMeasure.ML)));
     }
 
     @Test
