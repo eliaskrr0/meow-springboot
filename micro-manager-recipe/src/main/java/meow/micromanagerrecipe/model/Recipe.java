@@ -44,6 +44,10 @@ public class Recipe {
     @Column(name = "id_food", nullable = false)
     private Long idFood;
 
+    @Version
+    @Column(name = "version", nullable = false)
+    private Long version;
+
     @JsonManagedReference
     @OneToMany(mappedBy = "recipe", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<RelRecipeFood> ingredients = new ArrayList<>();

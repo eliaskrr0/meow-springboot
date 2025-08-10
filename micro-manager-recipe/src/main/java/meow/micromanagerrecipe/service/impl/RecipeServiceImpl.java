@@ -8,6 +8,7 @@ import meow.micromanagerrecipe.model.Recipe;
 import meow.micromanagerrecipe.repository.RecipeRepository;
 import meow.micromanagerrecipe.service.RecipeService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -26,6 +27,7 @@ public class RecipeServiceImpl implements RecipeService {
         return foodClient.searchFoodsByName(name);
     }
 
+    @Transactional
     @Override
     public Recipe saveRecipe(Recipe recipe) {
         if (recipe.getIngredients() != null) {
@@ -51,6 +53,7 @@ public class RecipeServiceImpl implements RecipeService {
         return recipeRepository.findByNameContainingIgnoreCase(name);
     }
 
+    @Transactional
     @Override
     public void updateRecipe(Recipe recipe) {
         if (recipeRepository.existsById(recipe.getIdRecipe())) {
