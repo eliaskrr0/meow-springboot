@@ -15,9 +15,9 @@ import lombok.Setter;
 @Setter
 @Entity
 @Table(name = "tb_rel_recipe_food")
-@IdClass(RelRecipeFoodId.class)
 public class RelRecipeFood {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_rel_recipe_food", nullable = false)
     private Long idRelRecipeFood;
 
@@ -26,9 +26,8 @@ public class RelRecipeFood {
     @JoinColumn(name = "id_recipe", nullable = false)
     private Recipe recipe;
 
-    @Id
     @Column(name = "id_food", nullable = false)
-    private Long foodId;
+    private Long idFood;
 
     @NotNull
     @Positive

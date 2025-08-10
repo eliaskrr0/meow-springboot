@@ -28,10 +28,15 @@ public class RecipeServiceImpl implements RecipeService {
 
     @Override
     public Recipe saveRecipe(Recipe recipe) {
-        try {
-            foodClient.getFoodById(recipe.getFoodId());
-        } catch (FeignException e) {
-            throw new ResourceNotFoundException(recipe.getFoodId());
+        if (recipe.getIngredients() != null) {
+            recipe.getIngredients().forEach(ingredient -> {
+                try {
+                    foodClient.getFoodById(ingredient.getIdFood());
+                } catch (FeignException e) {
+                    throw new ResourceNotFoundException(ingredient.getIdFood());
+                }
+                ingredient.setRecipe(recipe);
+            });
         }
         return recipeRepository.save(recipe);
     }
@@ -50,7 +55,14 @@ public class RecipeServiceImpl implements RecipeService {
     public void updateRecipe(Recipe recipe) {
         if (recipeRepository.existsById(recipe.getIdRecipe())) {
             if (recipe.getIngredients() != null) {
-                recipe.getIngredients().forEach(ingredient -> ingredient.setRecipe(recipe));
+                recipe.getIngredients().forEach(ingredient -> {
+                    try {
+                        foodClient.getFoodById(ingredient.getIdFood());
+                    } catch (FeignException e) {
+                        throw new ResourceNotFoundException(ingredient.getIdFood());
+                    }
+                    ingredient.setRecipe(recipe);
+                });
             }
             recipeRepository.save(recipe);
         } else {

@@ -42,9 +42,4 @@ public class Recipe {
     @JsonManagedReference
     @OneToMany(mappedBy = "recipe", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<RelRecipeFood> ingredients = new ArrayList<>();
-
-    @Schema(description = ValidationMessages.COLUMN_FOOD_ID_SCHEMA, example = "1")
-    @NotNull(message = ValidationMessages.COLUMN_FOOD_ID_REQUIRED)
-    @Column(name = "id_food", nullable = false)
-    private Long foodId;
 }
