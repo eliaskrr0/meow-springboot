@@ -43,7 +43,7 @@ public class Recipe {
     @Schema(description = ValidationMessages.COLUMN_FOOD_ID_SCHEMA, example = "1")
     @NotNull(message = ValidationMessages.COLUMN_FOOD_ID_REQUIRED)
     @Column(name = "id_food", nullable = false)
-    @JsonProperty("id_food")
+    @JsonProperty("idFood")
     private Long idFood;
 
     @Version
