@@ -3,6 +3,7 @@ package meow.micromanagerfood.model;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
+import java.math.BigDecimal;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -49,24 +50,32 @@ public class Food {
     @Positive(message = ValidationMessages.COLUMN_AMOUNT_POSITIVE)
     private int amount;
 
-    @Schema(description = ValidationMessages.COLUMN_PROTEIN_AMOUNT_SCHEMA, example = "100")
+    @Schema(description = ValidationMessages.COLUMN_PROTEIN_AMOUNT_SCHEMA, example = "100.00")
     @NotNull(message = ValidationMessages.COLUMN_PROTEIN_AMOUNT_REQUIRED)
     @PositiveOrZero(message = ValidationMessages.COLUMN_PROTEIN_AMOUNT_POSITIVE)
-    private int proteinAmount;
+    @Digits(integer = 8, fraction = 2)
+    @Column(name = "protein_amount", precision = 10, scale = 2)
+    private BigDecimal proteinAmount;
 
-    @Schema(description = ValidationMessages.COLUMN_CARBS_AMOUNT_SCHEMA, example = "200")
+    @Schema(description = ValidationMessages.COLUMN_CARBS_AMOUNT_SCHEMA, example = "200.00")
     @NotNull(message = ValidationMessages.COLUMN_CARBS_AMOUNT_REQUIRED)
     @PositiveOrZero(message = ValidationMessages.COLUMN_CARBS_AMOUNT_POSITIVE)
-    private int carbsAmount;
+    @Digits(integer = 8, fraction = 2)
+    @Column(name = "carbs_amount", precision = 10, scale = 2)
+    private BigDecimal carbsAmount;
 
-    @Schema(description = ValidationMessages.COLUMN_FAT_AMOUNT_SCHEMA, example = "50")
+    @Schema(description = ValidationMessages.COLUMN_FAT_AMOUNT_SCHEMA, example = "50.00")
     @NotNull(message = ValidationMessages.COLUMN_FAT_AMOUNT_REQUIRED)
     @PositiveOrZero(message = ValidationMessages.COLUMN_FAT_AMOUNT_POSITIVE)
-    private int fatAmount;
+    @Digits(integer = 8, fraction = 2)
+    @Column(name = "fat_amount", precision = 10, scale = 2)
+    private BigDecimal fatAmount;
 
-    @Schema(description = ValidationMessages.COLUMN_CALORIES_SCHEMA, example = "100")
+    @Schema(description = ValidationMessages.COLUMN_CALORIES_SCHEMA, example = "100.00")
     @NotNull(message = ValidationMessages.COLUMN_CALORIES_REQUIRED)
     @PositiveOrZero(message = ValidationMessages.COLUMN_CALORIES_POSITIVE)
-    private int calories;
+    @Digits(integer = 8, fraction = 2)
+    @Column(name = "calories", precision = 10, scale = 2)
+    private BigDecimal calories;
 
 }

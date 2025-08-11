@@ -3,6 +3,7 @@ package meow.micromanagerrecipe.service.impl;
 import feign.FeignException;
 import meow.common.dto.FoodDTO;
 import meow.common.dto.RecipeNutritionDTO;
+import meow.common.dto.enums.UnitMeasure;
 import meow.micromanagerrecipe.client.FoodClient;
 import meow.micromanagerrecipe.exception.ResourceNotFoundException;
 import meow.micromanagerrecipe.model.Recipe;
@@ -12,6 +13,8 @@ import meow.micromanagerrecipe.service.RecipeService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.List;
 
 @Service
@@ -51,12 +54,12 @@ public class RecipeServiceImpl implements RecipeService {
         if (recipe.getIngredients() == null || recipe.getIngredients().isEmpty()) {
             return new RecipeNutritionDTO();
         }
-        int totalProtein = 0;
-        int totalCarbs = 0;
-        int totalFat = 0;
-        int totalCalories = 0;
+        BigDecimal totalProtein = BigDecimal.ZERO;
+        BigDecimal totalCarbs = BigDecimal.ZERO;
+        BigDecimal totalFat = BigDecimal.ZERO;
+        BigDecimal totalCalories = BigDecimal.ZERO;
         int totalAmount = 0;
-        String unitMeasure = null;
+        UnitMeasure unitMeasure = null;
 
         for (RelRecipeFood ingredient : recipe.getIngredients()) {
             FoodDTO food;
@@ -68,14 +71,19 @@ public class RecipeServiceImpl implements RecipeService {
             if (unitMeasure == null) {
                 unitMeasure = food.getUnitMeasure();
             }
-            double factor = (double) ingredient.getAmount() / food.getAmount();
-            totalProtein += Math.round(food.getProteinAmount() * factor);
-            totalCarbs += Math.round(food.getCarbsAmount() * factor);
-            totalFat += Math.round(food.getFatAmount() * factor);
-            totalCalories += Math.round(food.getCalories() * factor);
+            BigDecimal factor = BigDecimal.valueOf(ingredient.getAmount())
+                    .divide(BigDecimal.valueOf(food.getAmount()), 10, RoundingMode.HALF_UP);
+            totalProtein = totalProtein.add(food.getProteinAmount().multiply(factor));
+            totalCarbs = totalCarbs.add(food.getCarbsAmount().multiply(factor));
+            totalFat = totalFat.add(food.getFatAmount().multiply(factor));
+            totalCalories = totalCalories.add(food.getCalories().multiply(factor));
             totalAmount += ingredient.getAmount();
         }
-        return new RecipeNutritionDTO(unitMeasure, totalAmount, totalProtein, totalCarbs, totalFat, totalCalories);
+        return new RecipeNutritionDTO(unitMeasure, totalAmount,
+                totalProtein.setScale(2, RoundingMode.HALF_UP),
+                totalCarbs.setScale(2, RoundingMode.HALF_UP),
+                totalFat.setScale(2, RoundingMode.HALF_UP),
+                totalCalories.setScale(2, RoundingMode.HALF_UP));
     }
 
     @Override

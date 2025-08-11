@@ -6,6 +6,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import meow.common.dto.enums.UnitMeasure;
 
+import java.math.BigDecimal;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -17,15 +19,15 @@ public class RecipeNutritionDTO {
     @Schema(example = "150")
     private int amount;
 
-    @Schema(example = "20")
-    private int proteinAmount;
+    @Schema(example = "20.00")
+    private BigDecimal proteinAmount;
 
-    @Schema(example = "30")
-    private int carbsAmount;
+    @Schema(example = "30.00")
+    private BigDecimal carbsAmount;
 
-    @Schema(example = "10")
-    private int fatAmount;
+    @Schema(example = "10.00")
+    private BigDecimal fatAmount;
 
-    @Schema(example = "250")
-    private int calories;
+    @Schema(example = "250.00")
+    private BigDecimal calories;
 }

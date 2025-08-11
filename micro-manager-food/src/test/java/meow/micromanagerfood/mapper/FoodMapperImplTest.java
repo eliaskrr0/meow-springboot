@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 import org.mapstruct.factory.Mappers;
 
 import java.util.List;
+import java.math.BigDecimal;
 
 class FoodMapperImplTest {
 
@@ -17,7 +18,8 @@ class FoodMapperImplTest {
     @Test
     void toDTO_isNotNull_shouldMapFood() {
         // Arrange
-        Food food = new Food(1L, "Pollo", "Carnicería", UnitMeasure.GR, 100, 20, 0, 5, 120);
+        Food food = new Food(1L, "Pollo", "Carnicería", UnitMeasure.GR, 100,
+                new BigDecimal("20.00"), new BigDecimal("0.00"), new BigDecimal("5.00"), new BigDecimal("120.00"));
 
         // Act
         FoodDTO dto = foodMapper.toDTO(food);
@@ -50,8 +52,10 @@ class FoodMapperImplTest {
     @Test
     void toDTOList_isNotNull_shouldMapListOfFood() {
         // Arrange
-        Food f1 = new Food(1L, "Pollo", "Carnicería", UnitMeasure.GR, 100, 20, 0, 5, 120);
-        Food f2 = new Food(2L, "Manzana", "Hacendado", UnitMeasure.GR, 80, 0, 22, 0, 88);
+        Food f1 = new Food(1L, "Pollo", "Carnicería", UnitMeasure.GR, 100,
+                new BigDecimal("20.00"), new BigDecimal("0.00"), new BigDecimal("5.00"), new BigDecimal("120.00"));
+        Food f2 = new Food(2L, "Manzana", "Hacendado", UnitMeasure.GR, 80,
+                new BigDecimal("0.00"), new BigDecimal("22.00"), new BigDecimal("0.00"), new BigDecimal("88.00"));
         List<Food> foods = List.of(f1, f2);
 
         // Act

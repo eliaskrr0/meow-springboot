@@ -6,6 +6,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import meow.common.dto.enums.UnitMeasure;
 
+import java.math.BigDecimal;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -26,15 +28,15 @@ public class FoodDTO {
     @Schema(example = "100")
     private int amount;
 
-    @Schema(example = "1.5")
-    private int proteinAmount;
+    @Schema(example = "1.50")
+    private BigDecimal proteinAmount;
 
-    @Schema(example = "22")
-    private int carbsAmount;
+    @Schema(example = "22.00")
+    private BigDecimal carbsAmount;
 
-    @Schema(example = "0")
-    private int fatAmount;
+    @Schema(example = "0.00")
+    private BigDecimal fatAmount;
 
-    @Schema(example = "246")
-    private int calories;
+    @Schema(example = "246.00")
+    private BigDecimal calories;
 }

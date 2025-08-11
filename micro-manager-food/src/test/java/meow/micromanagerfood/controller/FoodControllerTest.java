@@ -17,6 +17,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 
 import java.util.List;
+import java.math.BigDecimal;
 
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -35,8 +36,10 @@ class FoodControllerTest {
     @Test
     void getAllFoods() {
         // Arrange
-        Food food1 = new Food(1L, "Pollo", "Carnicería", UnitMeasure.GR, 100, 100, 200, 50, 370);
-        Food food2 = new Food(1L, "Leche", "Hacendado", UnitMeasure.ML, 250, 17, 0, 2, 112);
+        Food food1 = new Food(1L, "Pollo", "Carnicería", UnitMeasure.GR, 100,
+                new BigDecimal("100.00"), new BigDecimal("200.00"), new BigDecimal("50.00"), new BigDecimal("370.00"));
+        Food food2 = new Food(1L, "Leche", "Hacendado", UnitMeasure.ML, 250,
+                new BigDecimal("17.00"), new BigDecimal("0.00"), new BigDecimal("2.00"), new BigDecimal("112.00"));
         List<Food> mockFoods = List.of(food1, food2);
 
         when(foodService.getAllFoods()).thenReturn(mockFoods);
@@ -54,8 +57,10 @@ class FoodControllerTest {
     void searchFoodsByName() {
         // Arrange
         String name = "Pollo";
-        Food food = new Food(1L, "Pollo", "Carnicería", UnitMeasure.GR, 100, 100, 200, 50, 370);
-        FoodDTO foodDTO = new FoodDTO(1L, "Leche", "Hacendado", UnitMeasure.ML, 250, 17, 0, 2, 112);
+        Food food = new Food(1L, "Pollo", "Carnicería", UnitMeasure.GR, 100,
+                new BigDecimal("100.00"), new BigDecimal("200.00"), new BigDecimal("50.00"), new BigDecimal("370.00"));
+        FoodDTO foodDTO = new FoodDTO(1L, "Leche", "Hacendado", UnitMeasure.ML, 250,
+                new BigDecimal("17.00"), new BigDecimal("0.00"), new BigDecimal("2.00"), new BigDecimal("112.00"));
         List<Food> foods = List.of(food);
         List<FoodDTO> dtoList = List.of(foodDTO);
 
@@ -75,7 +80,8 @@ class FoodControllerTest {
     @Test
     void saveFood() {
         // Arrange
-        Food food1 = new Food(1L, "Pollo", "Carnicería", UnitMeasure.GR, 100, 100, 200, 50, 370);
+        Food food1 = new Food(1L, "Pollo", "Carnicería", UnitMeasure.GR, 100,
+                new BigDecimal("100.00"), new BigDecimal("200.00"), new BigDecimal("50.00"), new BigDecimal("370.00"));
 
         when(foodService.saveFood(food1)).thenReturn(food1);
 
@@ -92,7 +98,8 @@ class FoodControllerTest {
     void updateFood() {
         // Arrange
         Long idFood = 1L;
-        Food updatedFood = new Food(idFood, "Atún", "Calvo", UnitMeasure.GR, 80, 22, 0, 3, 110);
+        Food updatedFood = new Food(idFood, "Atún", "Calvo", UnitMeasure.GR, 80,
+                new BigDecimal("22.00"), new BigDecimal("0.00"), new BigDecimal("3.00"), new BigDecimal("110.00"));
 
         // Act
         ResponseEntity<Food> response = foodController.updateFood(idFood, updatedFood);

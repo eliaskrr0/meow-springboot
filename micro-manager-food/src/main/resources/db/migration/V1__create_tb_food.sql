@@ -3,9 +3,9 @@ CREATE TABLE tb_food (
     name VARCHAR(50) NOT NULL,
     brand VARCHAR(50) NOT NULL,
     unit_measure VARCHAR(10) NOT NULL,
-    amount INT NOT NULL,
-    protein_amount INT NOT NULL,
-    carbs_amount INT NOT NULL,
-    fat_amount INT NOT NULL,
-    calories INT NOT NULL
+    amount NUMERIC(10, 2) NOT NULL,
+    protein_amount DECIMAL(10,2) NOT NULL,
+    carbs_amount DECIMAL(10,2) NOT NULL,
+    fat_amount DECIMAL(10,2) NOT NULL,
+    calories DECIMAL(10,2) NOT NULL
 );
