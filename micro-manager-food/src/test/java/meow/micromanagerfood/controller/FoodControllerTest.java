@@ -54,6 +54,23 @@ class FoodControllerTest {
     }
 
     @Test
+    void getFoodById() {
+        // Arrange
+        Long idFood = 1L;
+        Food food = new Food(1L, "Pollo", "Carnicería", UnitMeasure.GR, 100,
+                new BigDecimal("100.00"), new BigDecimal("200.00"), new BigDecimal("50.00"), new BigDecimal("370.00"), new BigDecimal("3.20"));
+        when(foodService.getFoodById(idFood)).thenReturn(food);
+
+        // Act
+        ResponseEntity<Food> response = foodController.getFoodById(idFood);
+
+        // Assert
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals(food, response.getBody());
+        verify(foodService).getFoodById(idFood);
+    }
+
+    @Test
     void searchFoodsByName() {
         // Arrange
         String name = "Pollo";

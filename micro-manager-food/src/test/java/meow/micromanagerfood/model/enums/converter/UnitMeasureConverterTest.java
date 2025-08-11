@@ -11,8 +11,8 @@ class UnitMeasureConverterTest {
 
     @Test
     void shouldConvertToDatabaseColumn() {
-        assertEquals(UnitMeasure.GR, converter.convertToDatabaseColumn(UnitMeasure.GR));
-        assertEquals(UnitMeasure.ML, converter.convertToDatabaseColumn(UnitMeasure.ML));
+        assertEquals("gr", converter.convertToDatabaseColumn(UnitMeasure.GR));
+        assertEquals("ml", converter.convertToDatabaseColumn(UnitMeasure.ML));
         assertNull(converter.convertToDatabaseColumn(null));
     }
 

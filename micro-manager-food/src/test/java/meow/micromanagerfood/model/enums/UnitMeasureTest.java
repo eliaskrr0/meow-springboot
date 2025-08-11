@@ -9,8 +9,8 @@ class UnitMeasureTest {
 
     @Test
     void shouldReturnCorrectJsonValue() {
-        assertEquals(UnitMeasure.GR, UnitMeasure.GR.getValue());
-        assertEquals(UnitMeasure.ML, UnitMeasure.ML.getValue());
+        assertEquals("gr", UnitMeasure.GR.getValue());
+        assertEquals("ml", UnitMeasure.ML.getValue());
     }
 
     @Test
