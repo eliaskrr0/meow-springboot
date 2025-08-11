@@ -78,4 +78,10 @@ public class Food {
     @Column(name = "calories", precision = 10, scale = 2)
     private BigDecimal calories;
 
+    @Schema(description = ValidationMessages.COLUMN_PRICE_SCHEMA, example = "2.50")
+    @PositiveOrZero(message = ValidationMessages.COLUMN_PRICE_POSITIVE)
+    @Digits(integer = 8, fraction = 2)
+    @Column(name = "price", precision = 10, scale = 2)
+    private BigDecimal price;
+
 }

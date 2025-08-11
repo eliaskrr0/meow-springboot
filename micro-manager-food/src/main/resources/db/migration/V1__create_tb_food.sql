@@ -7,5 +7,6 @@ CREATE TABLE tb_food (
     protein_amount DECIMAL(10,2) NOT NULL,
     carbs_amount DECIMAL(10,2) NOT NULL,
     fat_amount DECIMAL(10,2) NOT NULL,
-    calories DECIMAL(10,2) NOT NULL
+    calories DECIMAL(10,2) NOT NULL,
+    price DECIMAL(10,2)
 );

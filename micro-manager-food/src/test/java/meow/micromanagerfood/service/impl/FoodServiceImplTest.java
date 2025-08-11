@@ -29,7 +29,7 @@ class FoodServiceImplTest {
     @Test
     void saveFood() {
         // Arrange
-        Food food = new Food(1L, "Pollo", "Carnicería", UnitMeasure.GR, 100, new BigDecimal("100"), new BigDecimal("200"), new BigDecimal("50"), new BigDecimal("370"));
+        Food food = new Food(1L, "Pollo", "Carnicería", UnitMeasure.GR, 100, new BigDecimal("100"), new BigDecimal("200"), new BigDecimal("50"), new BigDecimal("370"), new BigDecimal("1.20"));
         when(foodRepository.save(food)).thenReturn(food);
 
         // Act
@@ -44,8 +44,8 @@ class FoodServiceImplTest {
     @Test
     void getAllFoods() {
         // Arrange
-        Food food1 = new Food(1L, "Pollo", "Carnicería", UnitMeasure.GR, 100, new BigDecimal("100"), new BigDecimal("200"), new BigDecimal("50"), new BigDecimal("370"));
-        Food food2 = new Food(2L, "Leche", "Hacendado", UnitMeasure.ML, 100, new BigDecimal("100"), new BigDecimal("200"), new BigDecimal("50"), new BigDecimal("370"));
+        Food food1 = new Food(1L, "Pollo", "Carnicería", UnitMeasure.GR, 100, new BigDecimal("100"), new BigDecimal("200"), new BigDecimal("50"), new BigDecimal("370"), new BigDecimal("1.20"));
+        Food food2 = new Food(2L, "Leche", "Hacendado", UnitMeasure.ML, 100, new BigDecimal("100"), new BigDecimal("200"), new BigDecimal("50"), new BigDecimal("370"), new BigDecimal("1.20"));
         List<Food> mockFoods = List.of(food1, food2);
 
         when(foodRepository.findAll()).thenReturn(mockFoods);
@@ -61,7 +61,7 @@ class FoodServiceImplTest {
     void getFoodById() {
         // Arrange
         Long idFood = 1L;
-        Food food = new Food(1L, "Pollo", "Carnicería", UnitMeasure.GR, 100, new BigDecimal("100"), new BigDecimal("200"), new BigDecimal("50"), new BigDecimal("370"));
+        Food food = new Food(1L, "Pollo", "Carnicería", UnitMeasure.GR, 100, new BigDecimal("100"), new BigDecimal("200"), new BigDecimal("50"), new BigDecimal("370"), new BigDecimal("1.20"));
 
         when(foodRepository.findById(idFood)).thenReturn(Optional.of(food));
 
@@ -76,8 +76,8 @@ class FoodServiceImplTest {
     @Test
     void searchFoodByName() {
         // Arrange
-        Food food1 = new Food(1L, "Pollo", "Carnicería", UnitMeasure.GR, 100, new BigDecimal("100"), new BigDecimal("200"), new BigDecimal("50"), new BigDecimal("370"));
-        Food food2 = new Food(2L, "Leche", "Hacendado", UnitMeasure.ML, 100, new BigDecimal("100"), new BigDecimal("200"), new BigDecimal("50"), new BigDecimal("370"));
+        Food food1 = new Food(1L, "Pollo", "Carnicería", UnitMeasure.GR, 100, new BigDecimal("100"), new BigDecimal("200"), new BigDecimal("50"), new BigDecimal("370"), new BigDecimal("1.20"));
+        Food food2 = new Food(2L, "Leche", "Hacendado", UnitMeasure.ML, 100, new BigDecimal("100"), new BigDecimal("200"), new BigDecimal("50"), new BigDecimal("370"), new BigDecimal("1.20"));
         List<Food> mockFoods = List.of(food1, food2);
         String name = "pollo";
 
@@ -93,7 +93,7 @@ class FoodServiceImplTest {
     @Test
     void updateFood_shouldUpdate_whenFoodExists() {
         // Arrange
-        Food food = new Food(1L, "Pollo", "Carnicería", UnitMeasure.GR, 100, new BigDecimal("100"), new BigDecimal("200"), new BigDecimal("50"), new BigDecimal("370"));
+        Food food = new Food(1L, "Pollo", "Carnicería", UnitMeasure.GR, 100, new BigDecimal("100"), new BigDecimal("200"), new BigDecimal("50"), new BigDecimal("370"), new BigDecimal("1.20"));
         when(foodRepository.existsById(food.getIdFood())).thenReturn(true);
 
         // Act
@@ -107,7 +107,7 @@ class FoodServiceImplTest {
     @Test
     void updateFood_shouldThrowResourceNotFoundException_whenFoodDoesNotExists() {
         // Arrange
-        Food food = new Food(1L, "Pollo", "Carnicería", UnitMeasure.GR, 100, new BigDecimal("100"), new BigDecimal("200"), new BigDecimal("50"), new BigDecimal("370"));
+        Food food = new Food(1L, "Pollo", "Carnicería", UnitMeasure.GR, 100, new BigDecimal("100"), new BigDecimal("200"), new BigDecimal("50"), new BigDecimal("370"), new BigDecimal("1.20"));
         when(foodRepository.existsById(food.getIdFood())).thenReturn(false);
 
         // Act & Assert
@@ -121,7 +121,7 @@ class FoodServiceImplTest {
     @Test
     void deleteFood_shouldDelete_whenFoodExists() {
         // Arrange
-        Food food = new Food(1L, "Pollo", "Carnicería", UnitMeasure.GR, 100, new BigDecimal("100"), new BigDecimal("200"), new BigDecimal("50"), new BigDecimal("370"));
+        Food food = new Food(1L, "Pollo", "Carnicería", UnitMeasure.GR, 100, new BigDecimal("100"), new BigDecimal("200"), new BigDecimal("50"), new BigDecimal("370"), new BigDecimal("1.20"));
         when(foodRepository.existsById(food.getIdFood())).thenReturn(true);
 
         // Act
@@ -136,7 +136,7 @@ class FoodServiceImplTest {
     @Test
     void deleteFood_shouldThrowResourceNotFoundException_whenFoodDoesNotExists() {
         // Arrange
-        Food food = new Food(1L, "Pollo", "Carnicería", UnitMeasure.GR, 100, new BigDecimal("100"), new BigDecimal("200"), new BigDecimal("50"), new BigDecimal("370"));
+        Food food = new Food(1L, "Pollo", "Carnicería", UnitMeasure.GR, 100, new BigDecimal("100"), new BigDecimal("200"), new BigDecimal("50"), new BigDecimal("370"), new BigDecimal("1.20"));
         when(foodRepository.existsById(food.getIdFood())).thenReturn(false);
 
         // Act & Assert

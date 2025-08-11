@@ -36,6 +36,9 @@ public class ValidationMessages {
     public static final String COLUMN_CALORIES_REQUIRED = "Las calorías son obligatorias";
     public static final String COLUMN_CALORIES_POSITIVE = "Las calorías deben ser un valor positivo";
 
+    public static final String COLUMN_PRICE_SCHEMA = "Precio del alimento";
+    public static final String COLUMN_PRICE_POSITIVE = "El precio debe ser un valor positivo";
+
     public static final String FRONTEND_URL = "http://localhost:3000";
     public static final String[] ALLOWED_METHODS = {"GET", "POST", "PUT", "DELETE"};
     public static final String[] ALLOWED_HEADERS = {"*"};

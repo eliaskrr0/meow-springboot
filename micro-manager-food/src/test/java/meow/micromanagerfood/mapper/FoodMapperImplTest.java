@@ -19,7 +19,7 @@ class FoodMapperImplTest {
     void toDTO_isNotNull_shouldMapFood() {
         // Arrange
         Food food = new Food(1L, "Pollo", "Carnicería", UnitMeasure.GR, 100,
-                new BigDecimal("20.00"), new BigDecimal("0.00"), new BigDecimal("5.00"), new BigDecimal("120.00"));
+                new BigDecimal("20.00"), new BigDecimal("0.00"), new BigDecimal("5.00"), new BigDecimal("120.00"), new BigDecimal("1.20"));
 
         // Act
         FoodDTO dto = foodMapper.toDTO(food);
@@ -53,9 +53,9 @@ class FoodMapperImplTest {
     void toDTOList_isNotNull_shouldMapListOfFood() {
         // Arrange
         Food f1 = new Food(1L, "Pollo", "Carnicería", UnitMeasure.GR, 100,
-                new BigDecimal("20.00"), new BigDecimal("0.00"), new BigDecimal("5.00"), new BigDecimal("120.00"));
+                new BigDecimal("20.00"), new BigDecimal("0.00"), new BigDecimal("5.00"), new BigDecimal("120.00"), new BigDecimal("1.20"));
         Food f2 = new Food(2L, "Manzana", "Hacendado", UnitMeasure.GR, 80,
-                new BigDecimal("0.00"), new BigDecimal("22.00"), new BigDecimal("0.00"), new BigDecimal("88.00"));
+                new BigDecimal("0.00"), new BigDecimal("22.00"), new BigDecimal("0.00"), new BigDecimal("88.00"), new BigDecimal("1.20"));
         List<Food> foods = List.of(f1, f2);
 
         // Act

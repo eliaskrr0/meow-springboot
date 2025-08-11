@@ -39,4 +39,7 @@ public class FoodDTO {
 
     @Schema(example = "246.00")
     private BigDecimal calories;
+
+    @Schema(example = "2.50")
+    private BigDecimal price;
 }
