@@ -1,4 +1,4 @@
-package meow.micromanagerfood.model.enums;
+package meow.common.dto.enums;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;

@@ -2,7 +2,7 @@ package meow.micromanagerfood.model.enums.converter;
 
 import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;
-import meow.micromanagerfood.model.enums.UnitMeasure;
+import meow.common.dto.enums.UnitMeasure;
 
 @Converter(autoApply = true)
 public class UnitMeasureConverter implements AttributeConverter<UnitMeasure, String> {

@@ -1,5 +1,6 @@
 package meow.micromanagerfood.model.enums;
 
+import meow.common.dto.enums.UnitMeasure;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -14,7 +15,6 @@ class UnitMeasureTest {
 
     @Test
     void shouldCreateFromValidValue() {
-        assertEquals(UnitMeasure.GR, UnitMeasure.fromValue(String.valueOf(UnitMeasure.GR)));
         assertEquals(UnitMeasure.GR, UnitMeasure.fromValue(String.valueOf(UnitMeasure.GR))); // mayúsculas
         assertEquals(UnitMeasure.ML, UnitMeasure.fromValue(String.valueOf(UnitMeasure.ML)));
     }

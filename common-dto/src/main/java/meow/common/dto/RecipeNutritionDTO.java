@@ -4,6 +4,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import meow.common.dto.enums.UnitMeasure;
 
 @Data
 @NoArgsConstructor
@@ -11,7 +12,7 @@ import lombok.NoArgsConstructor;
 public class RecipeNutritionDTO {
 
     @Schema(example = "gr")
-    private String unitMeasure;
+    private UnitMeasure unitMeasure;
 
     @Schema(example = "150")
     private int amount;

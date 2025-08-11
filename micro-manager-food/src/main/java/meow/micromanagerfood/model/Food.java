@@ -7,7 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import meow.micromanagerfood.model.enums.UnitMeasure;
+import meow.common.dto.enums.UnitMeasure;
 import meow.micromanagerfood.model.enums.converter.UnitMeasureConverter;
 import meow.micromanagerfood.utils.messages.ValidationMessages;
 

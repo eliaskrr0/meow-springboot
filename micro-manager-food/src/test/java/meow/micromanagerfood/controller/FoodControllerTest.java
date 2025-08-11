@@ -3,14 +3,13 @@ package meow.micromanagerfood.controller;
 import meow.common.dto.FoodDTO;
 import meow.micromanagerfood.mapper.FoodMapper;
 import meow.micromanagerfood.model.Food;
-import meow.micromanagerfood.model.enums.UnitMeasure;
+import meow.common.dto.enums.UnitMeasure;
 import meow.micromanagerfood.service.FoodService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
@@ -56,7 +55,7 @@ class FoodControllerTest {
         // Arrange
         String name = "Pollo";
         Food food = new Food(1L, "Pollo", "Carnicería", UnitMeasure.GR, 100, 100, 200, 50, 370);
-        FoodDTO foodDTO = new FoodDTO(1L, "Leche", "Hacendado", UnitMeasure.ML.toString(), 250, 17, 0, 2, 112);
+        FoodDTO foodDTO = new FoodDTO(1L, "Leche", "Hacendado", UnitMeasure.ML, 250, 17, 0, 2, 112);
         List<Food> foods = List.of(food);
         List<FoodDTO> dtoList = List.of(foodDTO);
 

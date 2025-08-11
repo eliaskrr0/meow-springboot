@@ -2,7 +2,7 @@ package meow.micromanagerfood.service.impl;
 
 import meow.micromanagerfood.exception.ResourceNotFoundException;
 import meow.micromanagerfood.model.Food;
-import meow.micromanagerfood.model.enums.UnitMeasure;
+import meow.common.dto.enums.UnitMeasure;
 import meow.micromanagerfood.repository.FoodRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -11,6 +11,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -43,7 +44,7 @@ class FoodServiceImplTest {
     void getAllFoods() {
         // Arrange
         Food food1 = new Food(1L, "Pollo", "Carnicería", UnitMeasure.GR, 100, 100, 200, 50, 370);
-        Food food2 = new Food(1L, "Leche", "Hacendado", UnitMeasure.ML, 250, 17, 0, 2, 112);
+        Food food2 = new Food(2L, "Leche", "Hacendado", UnitMeasure.ML, 250, 17, 0, 2, 112);
         List<Food> mockFoods = List.of(food1, food2);
 
         when(foodRepository.findAll()).thenReturn(mockFoods);
@@ -56,10 +57,26 @@ class FoodServiceImplTest {
     }
 
     @Test
+    void getFoodById() {
+        // Arrange
+        Long idFood = 1L;
+        Food food = new Food(1L, "Pollo", "Carnicería", UnitMeasure.GR, 100, 100, 200, 50, 370);
+
+        when(foodRepository.findById(idFood)).thenReturn(Optional.of(food));
+
+        // Act
+        Food result = foodService.getFoodById(idFood);
+
+        //Assert
+        assertEquals(food, result);
+        verify(foodRepository, times(1)).findById(idFood);
+    }
+
+    @Test
     void searchFoodByName() {
         // Arrange
         Food food1 = new Food(1L, "Pollo", "Carnicería", UnitMeasure.GR, 100, 100, 200, 50, 370);
-        Food food2 = new Food(1L, "Leche", "Hacendado", UnitMeasure.ML, 250, 17, 0, 2, 112);
+        Food food2 = new Food(2L, "Leche", "Hacendado", UnitMeasure.ML, 250, 17, 0, 2, 112);
         List<Food> mockFoods = List.of(food1, food2);
         String name = "pollo";
 

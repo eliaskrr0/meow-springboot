@@ -4,7 +4,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import meow.common.dto.FoodDTO;
 import meow.micromanagerfood.model.Food;
-import meow.micromanagerfood.model.enums.UnitMeasure;
+import meow.common.dto.enums.UnitMeasure;
 import org.junit.jupiter.api.Test;
 import org.mapstruct.factory.Mappers;
 

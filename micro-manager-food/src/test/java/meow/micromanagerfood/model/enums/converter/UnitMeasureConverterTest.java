@@ -1,6 +1,6 @@
 package meow.micromanagerfood.model.enums.converter;
 
-import meow.micromanagerfood.model.enums.UnitMeasure;
+import meow.common.dto.enums.UnitMeasure;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -20,7 +20,6 @@ class UnitMeasureConverterTest {
     void shouldConvertToEntityAttribute() {
         assertEquals(UnitMeasure.GR, converter.convertToEntityAttribute(String.valueOf(UnitMeasure.GR)));
         assertEquals(UnitMeasure.ML, converter.convertToEntityAttribute(String.valueOf(UnitMeasure.ML)));
-        assertEquals(UnitMeasure.GR, converter.convertToEntityAttribute(String.valueOf(UnitMeasure.GR))); // case-insensitive
         assertNull(converter.convertToEntityAttribute(null));
     }
 
