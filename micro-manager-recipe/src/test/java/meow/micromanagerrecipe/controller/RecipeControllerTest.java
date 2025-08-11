@@ -143,6 +143,7 @@ class RecipeControllerTest {
         verify(recipeService).deleteRecipe(idRecipe);
     }
 
+    // Se puede ir ampliando la lista
     private static List<FoodDTO> getFoodDTOS() {
         FoodDTO foodDTO1 = new FoodDTO(1L, "Pollo", "Carnicería", UnitMeasure.GR, 100,
                 new BigDecimal("100.00"), new BigDecimal("200.00"), new BigDecimal("50.00"), new BigDecimal("370.00"), new BigDecimal("3.20"));
@@ -151,12 +152,13 @@ class RecipeControllerTest {
         return List.of(foodDTO1, foodDTO2);
     }
 
-    // Se puede ir amplicando la lista
+    // Se puede ir ampliando la lista
     private static List<RecipeNutritionDTO> getRecipeNutritionDTOs() {
         RecipeNutritionDTO nutritionDTO = new RecipeNutritionDTO(UnitMeasure.GR, 150, new BigDecimal("20.00"), new BigDecimal("30.0"), new BigDecimal("10.00"), new BigDecimal("250.00"));
         return List.of(nutritionDTO);
     }
 
+    // Se puede ir ampliando la lista
     private static List<Recipe> getRecipes() {
         Recipe recipe1 = new Recipe(1L, "Pastel de manzana", 278, 1L, 1L, null);
         Recipe recipe2 = new Recipe(2L, "Tostadas con huevo", 124, 2L, 1L, null);
