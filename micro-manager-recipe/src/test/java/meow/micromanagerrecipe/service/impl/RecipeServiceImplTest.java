@@ -1,5 +1,6 @@
 package meow.micromanagerrecipe.service.impl;
 
+import feign.FeignException;
 import meow.common.dto.FoodDTO;
 import meow.common.dto.RecipeNutritionDTO;
 import meow.common.dto.enums.UnitMeasure;
@@ -15,7 +16,9 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -47,11 +50,105 @@ class RecipeServiceImplTest {
 
     @Test
     void saveRecipe_shouldSaveRecipe_whenIngredientsAreValid() {
+        // Arrange
+        Recipe recipe = getRecipeWithIngredients();
+        FoodDTO food = getFoodDTOS().getFirst();
+        when(foodClient.getFoodById(food.getIdFood())).thenReturn(food);
+        when(recipeRepository.save(recipe)).thenAnswer(invocation -> invocation.getArgument(0));
 
+        // Act
+        Recipe response = recipeService.saveRecipe(recipe);
+
+        // Assert
+        assertEquals(recipe, response);
+        assertEquals(recipe, recipe.getIngredients().get(0).getRecipe());
+        verify(foodClient).getFoodById(food.getIdFood());
+        verify(recipeRepository).save(recipe);
     }
 
     @Test
-    void calculateRecipeNutrition() {
+    void saveRecipe_shouldThrowResourceNotFound_whenFoodDoesNotExist() {
+        // Arrange
+        Recipe recipe = getRecipeWithIngredients();
+        when(foodClient.getFoodById(anyLong())).thenThrow(mock(FeignException.class));
+
+        // Act & Assert
+        assertThrows(ResourceNotFoundException.class, () -> recipeService.saveRecipe(recipe));
+        verify(recipeRepository, never()).save(any());
+    }
+
+    @Test
+    void calculateRecipeNutrition_shouldReturnEmptyNutrition_whenRecipeHasNoIngredients() {
+        // Arrange
+        Recipe recipe = new Recipe(1L, "Pastel", 100, 1L, 1L, null);
+
+        // Act
+        RecipeNutritionDTO response = recipeService.calculateRecipeNutrition(recipe);
+
+        // Assert
+        assertEquals(new RecipeNutritionDTO(), response);
+    }
+
+
+    @Test
+    void calculateRecipeNutrition_shouldReturnNutrition_whenIngredientsAreValid() {
+        // Arrange
+        Recipe recipe = getRecipeWithIngredients();
+        FoodDTO food = getFoodDTOS().getFirst(); // amount 100 so factor 1
+        when(foodClient.getFoodById(food.getIdFood())).thenReturn(food);
+
+        // Act
+        RecipeNutritionDTO response = recipeService.calculateRecipeNutrition(recipe);
+
+        // Assert
+        RecipeNutritionDTO expected = new RecipeNutritionDTO(UnitMeasure.GR, 100,
+                new BigDecimal("100.00"), new BigDecimal("200.00"),
+                new BigDecimal("50.00"), new BigDecimal("370.00"));
+        assertEquals(expected, response);
+    }
+
+    @Test
+    void getFoodsByRecipe_shouldReturnFoods_whenRecipeExists() {
+        // Arrange
+        Recipe recipe = getRecipeWithIngredients();
+        Long idRecipe = recipe.getIdRecipe();
+        FoodDTO food = getFoodDTOS().getFirst();
+        when(recipeRepository.findById(idRecipe)).thenReturn(Optional.of(recipe));
+        when(foodClient.getFoodById(food.getIdFood())).thenReturn(food);
+
+        // Act
+        List<FoodDTO> response = recipeService.getFoodsByRecipe(idRecipe);
+
+        // Assert
+        assertEquals(List.of(food), response);
+        verify(recipeRepository).findById(idRecipe);
+        verify(foodClient).getFoodById(food.getIdFood());
+    }
+
+    @Test
+    void getFoodsByRecipe_shouldReturnEmptyList_whenRecipeHasNoIngredients() {
+        // Arrange
+        Recipe recipe = new Recipe(1L, "Pastel", 100, 1L, 1L, null);
+        when(recipeRepository.findById(recipe.getIdRecipe())).thenReturn(Optional.of(recipe));
+
+        // Act
+        List<FoodDTO> response = recipeService.getFoodsByRecipe(recipe.getIdRecipe());
+
+        // Assert
+        assertTrue(response.isEmpty());
+        verify(foodClient, never()).getFoodById(anyLong());
+    }
+
+    @Test
+    void getFoodsByRecipe_shouldThrowResourceNotFound_whenRecipeDoesNotExist() {
+        // Arrange
+        Long idRecipe = 1L;
+        when(recipeRepository.findById(idRecipe)).thenReturn(Optional.empty());
+
+        // Act & Assert
+        assertThrows(ResourceNotFoundException.class, () -> recipeService.getFoodsByRecipe(idRecipe));
+        verify(recipeRepository).findById(idRecipe);
+        verify(foodClient, never()).getFoodById(anyLong());
     }
 
     @Test
@@ -82,12 +179,32 @@ class RecipeServiceImplTest {
     }
 
     @Test
-    void getFoodsByRecipe() {
+    void updateRecipe_shouldUpdateRecipe_whenRecipeExists() {
+        // Arrange
+        Recipe recipe = getRecipeWithIngredients();
+        FoodDTO food = getFoodDTOS().get(0);
+        when(recipeRepository.existsById(recipe.getIdRecipe())).thenReturn(true);
+        when(foodClient.getFoodById(food.getIdFood())).thenReturn(food);
 
+        // Act
+        recipeService.updateRecipe(recipe);
+
+        // Assert
+        verify(recipeRepository).existsById(recipe.getIdRecipe());
+        verify(foodClient).getFoodById(food.getIdFood());
+        verify(recipeRepository).save(recipe);
     }
 
     @Test
-    void updateRecipe() {
+    void updateRecipe_shouldThrowResourceNotFound_whenRecipeDoesNotExist() {
+        // Arrange
+        Recipe recipe = getRecipeWithIngredients();
+        when(recipeRepository.existsById(recipe.getIdRecipe())).thenReturn(false);
+
+        // Act & Assert
+        assertThrows(ResourceNotFoundException.class, () -> recipeService.updateRecipe(recipe));
+        verify(recipeRepository).existsById(recipe.getIdRecipe());
+        verify(recipeRepository, never()).save(any());
     }
 
     @Test
@@ -134,8 +251,16 @@ class RecipeServiceImplTest {
 
     // Se puede ir ampliando la lista
     private static List<Recipe> getRecipes() {
-        Recipe recipe1 = new Recipe(1L, "Pastel de manzana", 278, 1L, 1L, null);
-        Recipe recipe2 = new Recipe(2L, "Tostadas con huevo", 124, 2L, 1L, null);
+        Recipe recipe1 = new Recipe(1L, "Pastel de manzana", 278, 1L, 1L, new ArrayList<>());
+        Recipe recipe2 = new Recipe(2L, "Tostadas con huevo", 124, 2L, 1L, new ArrayList<>());
         return List.of(recipe1, recipe2);
+    }
+
+    // Se puede ir ampliando la lista
+    private static Recipe getRecipeWithIngredients() {
+        Recipe recipe = new Recipe(1L, "Pastel", 100, 1L, 1L, new ArrayList<>());
+        RelRecipeFood ingredient = new RelRecipeFood(null, recipe, 1L, 100);
+        recipe.getIngredients().add(ingredient);
+        return recipe;
     }
 }
