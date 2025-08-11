@@ -15,6 +15,8 @@ public class ValidationMessages {
     public static final String COLUMN_FOOD_ID_SCHEMA = "ID del alimento";
     public static final String COLUMN_FOOD_ID_REQUIRED = "El ID del alimento es obligatorio";
 
+    public static final String COLUMN_ID_REL_RECIPE_FOOD_SCHEMA = "ID de la relación entre la receta y los aliemntos";
+
     public static final String FRONTEND_URL = "http://localhost:3000";
     public static final String[] ALLOWED_METHODS = {"GET", "POST", "PUT", "DELETE"};
     public static final String[] ALLOWED_HEADERS = {"*"};
