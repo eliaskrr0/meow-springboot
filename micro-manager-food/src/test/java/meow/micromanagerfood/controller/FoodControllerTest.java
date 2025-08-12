@@ -16,6 +16,7 @@ import org.springframework.http.ResponseEntity;
 import static org.junit.jupiter.api.Assertions.*;
 
 
+import java.util.Arrays;
 import java.util.List;
 import java.math.BigDecimal;
 
@@ -139,5 +140,15 @@ class FoodControllerTest {
         // Assert
         assertEquals(HttpStatus.NO_CONTENT, response.getStatusCode());
         verify(foodService).deleteFood(idFood);
+    }
+
+    @Test
+    void getUnitMeasures() {
+        // Act
+        ResponseEntity<List<UnitMeasure>> response = foodController.getUnitMeasures();
+
+        // Assert
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals(Arrays.asList(UnitMeasure.values()), response.getBody());
     }
 }

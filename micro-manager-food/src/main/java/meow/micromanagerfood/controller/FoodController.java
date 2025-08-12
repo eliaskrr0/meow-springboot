@@ -6,6 +6,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import meow.common.dto.FoodDTO;
+import meow.common.dto.enums.UnitMeasure;
 import meow.micromanagerfood.mapper.FoodMapper;
 import meow.micromanagerfood.model.Food;
 import meow.micromanagerfood.service.FoodService;
@@ -13,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Arrays;
 import java.util.List;
 
 @Tag(name = "Food", description = "API de alimentos")
@@ -75,5 +77,11 @@ public class FoodController {
     public ResponseEntity<Void> deleteFood(@PathVariable Long id) {
         foodService.deleteFood(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @Operation(summary = "Obtiene las unidades de medida disponibles")
+    @GetMapping("/unit-measures")
+    public ResponseEntity<List<UnitMeasure>> getUnitMeasures() {
+        return ResponseEntity.ok(Arrays.asList(UnitMeasure.values()));
     }
 }
