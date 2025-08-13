@@ -160,8 +160,8 @@ class RecipeControllerTest {
 
     // Se puede ir ampliando la lista
     private static List<Recipe> getRecipes() {
-        Recipe recipe1 = new Recipe(1L, "Pastel de manzana", 1L, null);
-        Recipe recipe2 = new Recipe(2L, "Tostadas con huevo", 2L, null);
+        Recipe recipe1 = new Recipe(1L, "Pastel de manzana", null);
+        Recipe recipe2 = new Recipe(2L, "Tostadas con huevo", null);
         return List.of(recipe1, recipe2);
     }
 }
