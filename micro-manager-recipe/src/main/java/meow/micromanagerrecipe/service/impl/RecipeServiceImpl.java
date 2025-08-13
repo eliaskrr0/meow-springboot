@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -71,12 +72,11 @@ public class RecipeServiceImpl implements RecipeService {
             if (unitMeasure == null) {
                 unitMeasure = food.getUnitMeasure();
             }
-            BigDecimal factor = BigDecimal.valueOf(ingredient.getAmount())
-                    .divide(BigDecimal.valueOf(food.getAmount()), 10, RoundingMode.HALF_UP);
-            totalProtein = totalProtein.add(food.getProteinAmount().multiply(factor));
-            totalCarbs = totalCarbs.add(food.getCarbsAmount().multiply(factor));
-            totalFat = totalFat.add(food.getFatAmount().multiply(factor));
-            totalCalories = totalCalories.add(food.getCalories().multiply(factor));
+
+            totalProtein = totalProtein.add(food.getProteinAmount());
+            totalCarbs = totalCarbs.add(food.getCarbsAmount());
+            totalFat = totalFat.add(food.getFatAmount());
+            totalCalories = totalCalories.add(food.getCalories());
             totalAmount += ingredient.getAmount();
         }
         return new RecipeNutritionDTO(unitMeasure, totalAmount,
