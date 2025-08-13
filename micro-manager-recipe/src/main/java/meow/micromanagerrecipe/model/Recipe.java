@@ -34,11 +34,6 @@ public class Recipe {
     @Column(name = "name", unique = true, nullable = false)
     private String name;
 
-    @Schema(description = ValidationMessages.COLUMN_FOOD_ID_SCHEMA, example = "1")
-    @NotNull(message = ValidationMessages.COLUMN_FOOD_ID_REQUIRED)
-    @Column(name = "id_food", nullable = false)
-    private Long idFood;
-
     @Version
     @Column(name = "version", nullable = false)
     private Long version;

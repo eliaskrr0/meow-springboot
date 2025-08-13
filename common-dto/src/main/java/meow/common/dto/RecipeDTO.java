@@ -13,9 +13,6 @@ public class RecipeDTO {
     private String name;
 
     @Schema(example = "1")
-    private Long idFood;
-
-    @Schema(example = "1")
     private Long version;
 
     private List<RelRecipeFoodDTO> ingredients;
