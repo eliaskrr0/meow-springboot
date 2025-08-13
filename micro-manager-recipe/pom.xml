@@ -9,10 +9,10 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>meow</groupId>
-	<artifactId>micro-manager-recipe</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
-	<name>micro-manager-recipe</name>
-	<description>micro-manager-recipe</description>
+    <artifactId>micro-user-profile</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <name>micro-user-profile</name>
+    <description>micro-user-profile</description>
     <url/>
     <licenses>
         <license/>

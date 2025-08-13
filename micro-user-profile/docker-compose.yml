@@ -1,0 +1,12 @@
+services:
+        micro-user-profile:
+                image: micro-user-profile:latest
+                build:
+                        context: .
+                env_file:
+                        - .env
+                environment:
+                        - SPRING_PROFILES_ACTIVE=local
+                ports:
+                        - "8082:8082"
+                restart: unless-stopped
