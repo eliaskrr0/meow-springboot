@@ -34,16 +34,9 @@ public class Recipe {
     @Column(name = "name", unique = true, nullable = false)
     private String name;
 
-    @Schema(description = ValidationMessages.COLUMN_AMOUNT_SCHEMA, example = "100")
-    @NotNull(message = ValidationMessages.COLUMN_AMOUNT_REQUIRED)
-    @Positive(message = ValidationMessages.COLUMN_AMOUNT_POSITIVE)
-    @Column(name = "amount", nullable = false)
-    private int amount;
-
     @Schema(description = ValidationMessages.COLUMN_FOOD_ID_SCHEMA, example = "1")
     @NotNull(message = ValidationMessages.COLUMN_FOOD_ID_REQUIRED)
     @Column(name = "id_food", nullable = false)
-    @JsonProperty("idFood")
     private Long idFood;
 
     @Version

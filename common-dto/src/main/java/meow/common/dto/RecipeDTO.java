@@ -12,9 +12,6 @@ public class RecipeDTO {
     @Schema(example = "Pastel de manzana")
     private String name;
 
-    @Schema(example = "4")
-    private int amount;
-
     @Schema(example = "1")
     private Long idFood;
 

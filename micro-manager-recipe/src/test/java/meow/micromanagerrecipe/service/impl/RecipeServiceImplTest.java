@@ -80,7 +80,7 @@ class RecipeServiceImplTest {
     @Test
     void calculateRecipeNutrition_shouldReturnEmptyNutrition_whenRecipeHasNoIngredients() {
         // Arrange
-        Recipe recipe = new Recipe(1L, "Pastel", 100, 1L, 1L, null);
+        Recipe recipe = new Recipe(1L, "Pastel", 1L, 1L, null);
 
         // Act
         RecipeNutritionDTO response = recipeService.calculateRecipeNutrition(recipe);
@@ -128,7 +128,7 @@ class RecipeServiceImplTest {
     @Test
     void getFoodsByRecipe_shouldReturnEmptyList_whenRecipeHasNoIngredients() {
         // Arrange
-        Recipe recipe = new Recipe(1L, "Pastel", 100, 1L, 1L, null);
+        Recipe recipe = new Recipe(1L, "Pastel", 1L, 1L, null);
         when(recipeRepository.findById(recipe.getIdRecipe())).thenReturn(Optional.of(recipe));
 
         // Act
@@ -251,14 +251,14 @@ class RecipeServiceImplTest {
 
     // Se puede ir ampliando la lista
     private static List<Recipe> getRecipes() {
-        Recipe recipe1 = new Recipe(1L, "Pastel de manzana", 278, 1L, 1L, new ArrayList<>());
-        Recipe recipe2 = new Recipe(2L, "Tostadas con huevo", 124, 2L, 1L, new ArrayList<>());
+        Recipe recipe1 = new Recipe(1L, "Pastel de manzana", 1L, 1L, new ArrayList<>());
+        Recipe recipe2 = new Recipe(2L, "Tostadas con huevo", 2L, 1L, new ArrayList<>());
         return List.of(recipe1, recipe2);
     }
 
     // Se puede ir ampliando la lista
     private static Recipe getRecipeWithIngredients() {
-        Recipe recipe = new Recipe(1L, "Pastel", 100, 1L, 1L, new ArrayList<>());
+        Recipe recipe = new Recipe(1L, "Pastel", 1L, 1L, new ArrayList<>());
         RelRecipeFood ingredient = new RelRecipeFood(null, recipe, 1L, 100);
         recipe.getIngredients().add(ingredient);
         return recipe;
