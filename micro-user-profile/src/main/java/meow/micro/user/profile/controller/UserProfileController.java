@@ -5,12 +5,10 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import meow.common.dto.user.profile.enums.TypeGender;
 import meow.common.dto.user.profile.enums.TypeTarget;
 import meow.micro.user.profile.model.UserProfile;
+import meow.micro.user.profile.service.UserProfileService;
 import meow.micro.user.profile.service.impl.UserProfileServiceImpl;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
 import java.util.List;
@@ -41,5 +39,12 @@ public class UserProfileController {
     @GetMapping("/gender")
     public ResponseEntity<List<TypeGender>> getTypeGender() {
         return ResponseEntity.ok(Arrays.asList(TypeGender.values()));
+    }
+
+    @PutMapping("/update/{id}")
+    public ResponseEntity<UserProfile> updateProfile(@PathVariable Long id, @RequestBody UserProfile userProfile){
+        userProfile.setIdUserProfile(id);
+        service.updateProfile(userProfile);
+        return ResponseEntity.ok(service.findById(id));
     }
 }
