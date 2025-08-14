@@ -14,8 +14,8 @@ class TypeGenderTest {
 
     @Test
     void shouldCreateFromValidValue() {
-        assertEquals(TypeGender.MASCULINE, TypeGender.fromValue(String.valueOf(TypeGender.MASCULINE)));
-        assertEquals(TypeGender.FEMININE, TypeGender.fromValue(String.valueOf(TypeGender.FEMININE)));
+        assertEquals(TypeGender.MASCULINE, TypeGender.fromValue(TypeGender.MASCULINE.getValue()));
+        assertEquals(TypeGender.FEMININE, TypeGender.fromValue(TypeGender.FEMININE.getValue()));
     }
 
     @Test

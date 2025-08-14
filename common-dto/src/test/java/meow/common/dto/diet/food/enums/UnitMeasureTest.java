@@ -14,8 +14,8 @@ class UnitMeasureTest {
 
     @Test
     void shouldCreateFromValidValue() {
-        assertEquals(UnitMeasure.GR, UnitMeasure.fromValue(String.valueOf(UnitMeasure.GR))); // mayúsculas
-        assertEquals(UnitMeasure.ML, UnitMeasure.fromValue(String.valueOf(UnitMeasure.ML)));
+        assertEquals(UnitMeasure.GR, UnitMeasure.fromValue(UnitMeasure.GR.getValue()));
+        assertEquals(UnitMeasure.ML, UnitMeasure.fromValue(UnitMeasure.ML.getValue()));
     }
 
     @Test

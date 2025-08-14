@@ -17,12 +17,11 @@ class TypeTargetTest {
 
     @Test
     void shouldCreateFromValidValue() {
-        assertEquals(TypeTarget.GAIN_FIVE_KILOS_OF_WEIGHT, TypeTarget.fromValue(String.valueOf(TypeTarget.GAIN_FIVE_KILOS_OF_WEIGHT)));
-        assertEquals(TypeTarget.GAIN_TWO_KILOS_OF_WEIGHT, TypeTarget.fromValue(String.valueOf(TypeTarget.GAIN_TWO_KILOS_OF_WEIGHT)));
-        assertEquals(TypeTarget.MAINTAIN_WEIGHT, TypeTarget.fromValue(String.valueOf(TypeTarget.MAINTAIN_WEIGHT)));
-        assertEquals(TypeTarget.LOSE_TWO_KILOS_OF_WEIGHT, TypeTarget.fromValue(String.valueOf(TypeTarget.LOSE_TWO_KILOS_OF_WEIGHT)));
-        assertEquals(TypeTarget.LOSE_FIVE_KILOS_OF_WEIGHT, TypeTarget.fromValue(String.valueOf(TypeTarget.LOSE_FIVE_KILOS_OF_WEIGHT)));
-
+        assertEquals(TypeTarget.GAIN_FIVE_KILOS_OF_WEIGHT, TypeTarget.fromValue(TypeTarget.GAIN_FIVE_KILOS_OF_WEIGHT.getValue()));
+        assertEquals(TypeTarget.GAIN_TWO_KILOS_OF_WEIGHT, TypeTarget.fromValue(TypeTarget.GAIN_TWO_KILOS_OF_WEIGHT.getValue()));
+        assertEquals(TypeTarget.MAINTAIN_WEIGHT, TypeTarget.fromValue(TypeTarget.MAINTAIN_WEIGHT.getValue()));
+        assertEquals(TypeTarget.LOSE_TWO_KILOS_OF_WEIGHT, TypeTarget.fromValue(TypeTarget.LOSE_TWO_KILOS_OF_WEIGHT.getValue()));
+        assertEquals(TypeTarget.LOSE_FIVE_KILOS_OF_WEIGHT, TypeTarget.fromValue(TypeTarget.LOSE_FIVE_KILOS_OF_WEIGHT.getValue()));
     }
 
     @Test
