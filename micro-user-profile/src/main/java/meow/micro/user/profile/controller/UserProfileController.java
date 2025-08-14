@@ -26,7 +26,7 @@ public class UserProfileController {
     }
 
     @Operation(summary = "Obtener perfil de usuario")
-    @RequestMapping("/profile/{id}")
+    @RequestMapping("/{id}")
     public ResponseEntity<UserProfile> getProfile(@PathVariable Long id) {
         return ResponseEntity.ok(service.findById(id));
     }
