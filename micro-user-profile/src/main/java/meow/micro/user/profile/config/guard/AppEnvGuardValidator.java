@@ -1,6 +1,6 @@
-package config.guard;
+package meow.micro.user.profile.config.guard;
 
-import config.AppProperties;
+import meow.micro.user.profile.config.AppProperties;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.core.env.Environment;

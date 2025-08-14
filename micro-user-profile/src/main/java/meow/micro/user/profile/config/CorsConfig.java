@@ -1,6 +1,6 @@
-package config;
+package meow.micro.user.profile.config;
 
-import messages.ValidationMessages;
+import meow.micro.user.profile.utils.messages.ValidationMessages;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
