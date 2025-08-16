@@ -8,20 +8,24 @@ class TypeTargetTest {
 
     @Test
     void shouldReturnCorrectJsonValue() {
-        assertEquals("Ganar 5kg de peso", TypeTarget.GAIN_FIVE_KILOS_OF_WEIGHT.getValue());
-        assertEquals("Ganar 2kg de peso", TypeTarget.GAIN_TWO_KILOS_OF_WEIGHT.getValue());
+        assertEquals("Ganar 0,5% de peso", TypeTarget.GAIN_WEIGHT_AGGRESSIVELY.getValue());
+        assertEquals("Ganar 0,35% de peso", TypeTarget.GAIN_WEIGHT_MODERATELY.getValue());
+        assertEquals("Ganar 0,25% de peso", TypeTarget.GAIN_WEIGHT_SLOWLY.getValue());
         assertEquals("Mantener peso", TypeTarget.MAINTAIN_WEIGHT.getValue());
-        assertEquals("Perder 2kg de peso", TypeTarget.LOSE_TWO_KILOS_OF_WEIGHT.getValue());
-        assertEquals("Perder 5kg de peso", TypeTarget.LOSE_FIVE_KILOS_OF_WEIGHT.getValue());
+        assertEquals("Perder 0,25% de peso", TypeTarget.LOSE_WEIGHT_SLOWLY.getValue());
+        assertEquals("Perder 0,5% de peso", TypeTarget.LOSE_WEIGHT_MODERATELY.getValue());
+        assertEquals("Perder 0,75% de peso", TypeTarget.LOSE_WEIGHT_AGGRESSIVELY.getValue());
     }
 
     @Test
     void shouldCreateFromValidValue() {
-        assertEquals(TypeTarget.GAIN_FIVE_KILOS_OF_WEIGHT, TypeTarget.fromValue(TypeTarget.GAIN_FIVE_KILOS_OF_WEIGHT.getValue()));
-        assertEquals(TypeTarget.GAIN_TWO_KILOS_OF_WEIGHT, TypeTarget.fromValue(TypeTarget.GAIN_TWO_KILOS_OF_WEIGHT.getValue()));
+        assertEquals(TypeTarget.GAIN_WEIGHT_AGGRESSIVELY, TypeTarget.fromValue(TypeTarget.GAIN_WEIGHT_AGGRESSIVELY.getValue()));
+        assertEquals(TypeTarget.GAIN_WEIGHT_MODERATELY, TypeTarget.fromValue(TypeTarget.GAIN_WEIGHT_MODERATELY.getValue()));
+        assertEquals(TypeTarget.GAIN_WEIGHT_SLOWLY, TypeTarget.fromValue(TypeTarget.GAIN_WEIGHT_SLOWLY.getValue()));
         assertEquals(TypeTarget.MAINTAIN_WEIGHT, TypeTarget.fromValue(TypeTarget.MAINTAIN_WEIGHT.getValue()));
-        assertEquals(TypeTarget.LOSE_TWO_KILOS_OF_WEIGHT, TypeTarget.fromValue(TypeTarget.LOSE_TWO_KILOS_OF_WEIGHT.getValue()));
-        assertEquals(TypeTarget.LOSE_FIVE_KILOS_OF_WEIGHT, TypeTarget.fromValue(TypeTarget.LOSE_FIVE_KILOS_OF_WEIGHT.getValue()));
+        assertEquals(TypeTarget.LOSE_WEIGHT_SLOWLY, TypeTarget.fromValue(TypeTarget.LOSE_WEIGHT_SLOWLY.getValue()));
+        assertEquals(TypeTarget.LOSE_WEIGHT_MODERATELY, TypeTarget.fromValue(TypeTarget.LOSE_WEIGHT_MODERATELY.getValue()));
+        assertEquals(TypeTarget.LOSE_WEIGHT_AGGRESSIVELY, TypeTarget.fromValue(TypeTarget.LOSE_WEIGHT_AGGRESSIVELY.getValue()));
     }
 
     @Test

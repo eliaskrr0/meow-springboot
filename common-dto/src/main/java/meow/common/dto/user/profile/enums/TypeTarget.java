@@ -4,11 +4,13 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 public enum TypeTarget {
-    GAIN_FIVE_KILOS_OF_WEIGHT("Ganar 5kg de peso"),
-    GAIN_TWO_KILOS_OF_WEIGHT("Ganar 2kg de peso"),
+    GAIN_WEIGHT_AGGRESSIVELY("Ganar 0,5% de peso"),
+    GAIN_WEIGHT_MODERATELY("Ganar 0,35% de peso"),
+    GAIN_WEIGHT_SLOWLY("Ganar 0,25% de peso"),
     MAINTAIN_WEIGHT("Mantener peso"),
-    LOSE_TWO_KILOS_OF_WEIGHT("Perder 2kg de peso"),
-    LOSE_FIVE_KILOS_OF_WEIGHT("Perder 5kg de peso");
+    LOSE_WEIGHT_SLOWLY("Perder 0,25% de peso"),
+    LOSE_WEIGHT_MODERATELY("Perder 0,5% de peso"),
+    LOSE_WEIGHT_AGGRESSIVELY("Perder 0,75% de peso");
 
     private final String value;
 
