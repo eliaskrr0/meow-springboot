@@ -9,6 +9,6 @@ public interface FoodService {
     List<Food> getAllFoods();
     Food getFoodById(Long id);
     List<Food> searchFoodByName(String name);
-    void updateFood(Food food);
+    Food updateFood(Food food);
     void deleteFood(Long id);
 }

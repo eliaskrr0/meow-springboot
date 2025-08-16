@@ -68,8 +68,8 @@ public class FoodController {
     public ResponseEntity<FoodDTO> updateFood(@PathVariable Long id, @Valid @RequestBody FoodDTO foodDTO) {
         Food food = foodMapper.toEntity(foodDTO);
         food.setIdFood(id);
-        foodService.updateFood(food);
-        return ResponseEntity.ok(foodMapper.toDTO(food));
+        Food updated = foodService.updateFood(food);
+        return ResponseEntity.ok(foodMapper.toDTO(updated));
     }
 
     @ApiResponses({

@@ -37,9 +37,9 @@ public class FoodServiceImpl implements FoodService {
     }
 
     @Override
-    public void updateFood(Food food) {
+    public Food updateFood(Food food) {
         if (foodRepository.existsById(food.getIdFood())) {
-            foodRepository.save(food);
+            return foodRepository.save(food);
         } else {
             throw new ResourceNotFoundException(food.getIdFood());
         }

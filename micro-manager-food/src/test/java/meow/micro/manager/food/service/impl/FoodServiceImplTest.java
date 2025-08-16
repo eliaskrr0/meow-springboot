@@ -95,11 +95,13 @@ class FoodServiceImplTest {
         // Arrange
         Food food = new Food(1L, "Pollo", "Carnicería", UnitMeasure.GR, 100, new BigDecimal("100"), new BigDecimal("200"), new BigDecimal("50"), new BigDecimal("370"), new BigDecimal("1.20"));
         when(foodRepository.existsById(food.getIdFood())).thenReturn(true);
+        when(foodRepository.save(food)).thenReturn(food);
 
         // Act
-        foodService.updateFood(food);
+        Food result = foodService.updateFood(food);
 
         // Assert
+        assertEquals(food, result);
         verify(foodRepository).existsById(food.getIdFood());
         verify(foodRepository).save(food);
     }

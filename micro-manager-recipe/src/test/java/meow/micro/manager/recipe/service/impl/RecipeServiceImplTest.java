@@ -185,11 +185,13 @@ class RecipeServiceImplTest {
         FoodDTO food = getFoodDTOS().get(0);
         when(recipeRepository.existsById(recipe.getIdRecipe())).thenReturn(true);
         when(foodClient.getFoodById(food.getIdFood())).thenReturn(food);
+        when(recipeRepository.save(recipe)).thenReturn(recipe);
 
         // Act
-        recipeService.updateRecipe(recipe);
+        Recipe result = recipeService.updateRecipe(recipe);
 
         // Assert
+        assertEquals(recipe, result);
         verify(recipeRepository).existsById(recipe.getIdRecipe());
         verify(foodClient).getFoodById(food.getIdFood());
         verify(recipeRepository).save(recipe);

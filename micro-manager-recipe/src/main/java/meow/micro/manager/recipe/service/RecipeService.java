@@ -13,6 +13,6 @@ public interface RecipeService {
     List<Recipe> getAllRecipes();
     List<Recipe> searchRecipesByName(String name);
     List<FoodDTO> getFoodsByRecipe(Long idRecipe);
-    void updateRecipe(Recipe recipe);
+    Recipe updateRecipe(Recipe recipe);
     void deleteRecipe(Long idRecipe);
 }

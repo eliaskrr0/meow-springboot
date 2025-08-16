@@ -116,7 +116,7 @@ public class RecipeServiceImpl implements RecipeService {
 
     @Transactional
     @Override
-    public void updateRecipe(Recipe recipe) {
+    public Recipe updateRecipe(Recipe recipe) {
         if (recipeRepository.existsById(recipe.getIdRecipe())) {
             if (recipe.getIngredients() != null) {
                 recipe.getIngredients().forEach(ingredient -> {
@@ -128,7 +128,7 @@ public class RecipeServiceImpl implements RecipeService {
                     ingredient.setRecipe(recipe);
                 });
             }
-            recipeRepository.save(recipe);
+            return recipeRepository.save(recipe);
         } else {
             throw new ResourceNotFoundException(recipe.getIdRecipe());
         }

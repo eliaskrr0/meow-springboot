@@ -140,6 +140,7 @@ class FoodControllerTest {
                 new BigDecimal("22.00"), new BigDecimal("0.00"), new BigDecimal("3.00"), new BigDecimal("110.00"), new BigDecimal("1.20"));
 
         when(foodMapper.toEntity(updatedDto)).thenReturn(updatedFood);
+        when(foodService.updateFood(updatedFood)).thenReturn(updatedFood);
         when(foodMapper.toDTO(updatedFood)).thenReturn(resultDto);
 
         // Act

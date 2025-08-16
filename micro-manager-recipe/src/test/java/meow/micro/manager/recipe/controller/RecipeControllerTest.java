@@ -121,6 +121,8 @@ class RecipeControllerTest {
         Long idRecipe = 1L;
         Recipe updatedRecipe = getRecipes().getFirst();
 
+        when(recipeService.updateRecipe(updatedRecipe)).thenReturn(updatedRecipe);
+
         // Act
         ResponseEntity<Recipe> response = controller.updateRecipe(idRecipe, updatedRecipe);
 

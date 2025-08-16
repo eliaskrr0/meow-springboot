@@ -1,4 +1,4 @@
-package exception;
+package meow.micro.user.profile.exception;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
