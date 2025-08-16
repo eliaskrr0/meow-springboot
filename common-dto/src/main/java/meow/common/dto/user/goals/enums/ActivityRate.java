@@ -23,6 +23,7 @@ public enum ActivityRate {
         return value;
     }
 
+    @JsonValue
     public double getFactor() { return factor; }
 
     @JsonCreator
