@@ -1,0 +1,9 @@
+CREATE TABLE tb_user_goal (
+    id_user BIGSERIAL PRIMARY KEY,
+    protein_target DECIMAL(10,2) NOT NULL,
+    carbs_target DECIMAL(10,2) NOT NULL,
+    fat_target DECIMAL(10,2) NOT NULL,
+    calories_target DECIMAL(10,2) NOT NULL,
+    type_target VARCHAR(18) NOT NULL,
+    activity_target VARCHAR(10) NOT NULL
+);
