@@ -31,29 +31,32 @@ public class FoodController {
 
     @Operation(summary = "Obtiene todos los alimentos")
     @GetMapping("/list")
-    public ResponseEntity<List<Food>> getAllFoods() {
-        return ResponseEntity.ok(foodService.getAllFoods());
+    public ResponseEntity<List<FoodDTO>> getAllFoods() {
+        List<Food> foods = foodService.getAllFoods();
+        return ResponseEntity.ok(foodMapper.toDTOList(foods));
     }
 
     @Operation(summary = "Obtiene un alimento por su ID")
     @GetMapping("/{id}")
-    public ResponseEntity<Food> getFoodById(@PathVariable Long id) {
-        return ResponseEntity.ok(foodService.getFoodById(id));
+    public ResponseEntity<FoodDTO> getFoodById(@PathVariable Long id) {
+        Food food = foodService.getFoodById(id);
+        return ResponseEntity.ok(foodMapper.toDTO(food));
     }
 
     @Operation(summary = "Obtiene un alimento por su nombre")
     @GetMapping("/search")
     public ResponseEntity<List<FoodDTO>> searchFoodsByName(@RequestParam String name) {
         List<Food> foods = foodService.searchFoodByName(name);
-        List<FoodDTO> dtoList = foodMapper.toDTOList(foods);
-        return ResponseEntity.ok(dtoList);
+        return ResponseEntity.ok(foodMapper.toDTOList(foods));
     }
 
     @ApiResponse(responseCode = "201", description = "Alimento creado correctamente")
     @Operation(summary = "Guarda un alimento")
     @PostMapping("/add")
-    public ResponseEntity<Food> saveFood(@Valid @RequestBody Food food) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(foodService.saveFood(food));
+    public ResponseEntity<FoodDTO> saveFood(@Valid @RequestBody FoodDTO foodDTO) {
+        Food food = foodMapper.toEntity(foodDTO);
+        Food saved = foodService.saveFood(food);
+        return ResponseEntity.status(HttpStatus.CREATED).body(foodMapper.toDTO(saved));
     }
 
     @ApiResponses({
@@ -62,10 +65,11 @@ public class FoodController {
     })
     @Operation(summary = "Actualiza alimento filtrando por su ID")
     @PutMapping("/update/{id}")
-    public ResponseEntity<Food> updateFood(@PathVariable Long id, @Valid @RequestBody Food food) {
+    public ResponseEntity<FoodDTO> updateFood(@PathVariable Long id, @Valid @RequestBody FoodDTO foodDTO) {
+        Food food = foodMapper.toEntity(foodDTO);
         food.setIdFood(id);
         foodService.updateFood(food);
-        return ResponseEntity.ok(food);
+        return ResponseEntity.ok(foodMapper.toDTO(food));
     }
 
     @ApiResponses({

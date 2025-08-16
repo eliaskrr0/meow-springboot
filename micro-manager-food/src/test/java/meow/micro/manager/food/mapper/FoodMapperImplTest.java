@@ -66,4 +66,55 @@ class FoodMapperImplTest {
         assertEquals("Pollo", dtos.get(0).getName());
         assertEquals("Manzana", dtos.get(1).getName());
     }
+
+    @Test
+    void toEntity_isNotNull_shouldMapDTO() {
+        // Arrange
+        FoodDTO dto = new FoodDTO(1L, "Pollo", "Carnicería", UnitMeasure.GR, 100,
+                new BigDecimal("20.00"), new BigDecimal("0.00"), new BigDecimal("5.00"), new BigDecimal("120.00"), new BigDecimal("1.20"));
+
+        // Act
+        Food food = foodMapper.toEntity(dto);
+
+        // Assert
+        assertEquals(dto.getIdFood(), food.getIdFood());
+        assertEquals(dto.getName(), food.getName());
+        assertEquals(dto.getBrand(), food.getBrand());
+    }
+
+    @Test
+    void toEntity_whenIsNull_shouldReturnNull() {
+        // Arrange & Act
+        Food food = foodMapper.toEntity(null);
+
+        // Assert
+        assertNull(food);
+    }
+
+    @Test
+    void toEntityList_whenIsNull_shouldReturnNull() {
+        // Arrange & Act
+        List<Food> foods = foodMapper.toEntityList(null);
+
+        // Assert
+        assertNull(foods);
+    }
+
+    @Test
+    void toEntityList_isNotNull_shouldMapListOfDTO() {
+        // Arrange
+        FoodDTO d1 = new FoodDTO(1L, "Pollo", "Carnicería", UnitMeasure.GR, 100,
+                new BigDecimal("20.00"), new BigDecimal("0.00"), new BigDecimal("5.00"), new BigDecimal("120.00"), new BigDecimal("1.20"));
+        FoodDTO d2 = new FoodDTO(2L, "Manzana", "Hacendado", UnitMeasure.GR, 80,
+                new BigDecimal("0.00"), new BigDecimal("22.00"), new BigDecimal("0.00"), new BigDecimal("88.00"), new BigDecimal("1.20"));
+        List<FoodDTO> dtos = List.of(d1, d2);
+
+        // Act
+        List<Food> foods = foodMapper.toEntityList(dtos);
+
+        // Assert
+        assertEquals(2, foods.size());
+        assertEquals("Pollo", foods.get(0).getName());
+        assertEquals("Manzana", foods.get(1).getName());
+    }
 }

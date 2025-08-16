@@ -25,7 +25,6 @@ import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class FoodControllerTest {
-
     @Mock
     private FoodService foodService;
     @Mock
@@ -42,16 +41,23 @@ class FoodControllerTest {
         Food food2 = new Food(1L, "Leche", "Hacendado", UnitMeasure.ML, 250,
                 new BigDecimal("17.00"), new BigDecimal("0.00"), new BigDecimal("2.00"), new BigDecimal("112.00"), new BigDecimal("1.20"));
         List<Food> mockFoods = List.of(food1, food2);
+        FoodDTO dto1 = new FoodDTO(1L, "Pollo", "Carnicería", UnitMeasure.GR, 100,
+                new BigDecimal("100.00"), new BigDecimal("200.00"), new BigDecimal("50.00"), new BigDecimal("370.00"), new BigDecimal("1.20"));
+        FoodDTO dto2 = new FoodDTO(1L, "Leche", "Hacendado", UnitMeasure.ML, 250,
+                new BigDecimal("17.00"), new BigDecimal("0.00"), new BigDecimal("2.00"), new BigDecimal("112.00"), new BigDecimal("1.20"));
+        List<FoodDTO> mockDtos = List.of(dto1, dto2);
 
         when(foodService.getAllFoods()).thenReturn(mockFoods);
+        when(foodMapper.toDTOList(mockFoods)).thenReturn(mockDtos);
 
         // Act
-        ResponseEntity<List<Food>> response = foodController.getAllFoods();
+        ResponseEntity<List<FoodDTO>> response = foodController.getAllFoods();
 
         // Assert
         assertEquals(HttpStatus.OK, response.getStatusCode());
-        assertEquals(mockFoods, response.getBody());
+        assertEquals(mockDtos, response.getBody());
         verify(foodService).getAllFoods();
+        verify(foodMapper).toDTOList(mockFoods);
     }
 
     @Test
@@ -60,15 +66,19 @@ class FoodControllerTest {
         Long idFood = 1L;
         Food food = new Food(1L, "Pollo", "Carnicería", UnitMeasure.GR, 100,
                 new BigDecimal("100.00"), new BigDecimal("200.00"), new BigDecimal("50.00"), new BigDecimal("370.00"), new BigDecimal("3.20"));
+        FoodDTO foodDTO = new FoodDTO(1L, "Pollo", "Carnicería", UnitMeasure.GR, 100,
+                new BigDecimal("100.00"), new BigDecimal("200.00"), new BigDecimal("50.00"), new BigDecimal("370.00"), new BigDecimal("3.20"));
         when(foodService.getFoodById(idFood)).thenReturn(food);
+        when(foodMapper.toDTO(food)).thenReturn(foodDTO);
 
         // Act
-        ResponseEntity<Food> response = foodController.getFoodById(idFood);
+        ResponseEntity<FoodDTO> response = foodController.getFoodById(idFood);
 
         // Assert
         assertEquals(HttpStatus.OK, response.getStatusCode());
-        assertEquals(food, response.getBody());
+        assertEquals(foodDTO, response.getBody());
         verify(foodService).getFoodById(idFood);
+        verify(foodMapper).toDTO(food);
     }
 
     @Test
@@ -88,7 +98,7 @@ class FoodControllerTest {
         // Act
         ResponseEntity<List<FoodDTO>> response = foodController.searchFoodsByName(name);
 
-        // Arrange
+        // Assert
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(dtoList, response.getBody());
         verify(foodService).searchFoodByName(name);
@@ -98,35 +108,50 @@ class FoodControllerTest {
     @Test
     void saveFood() {
         // Arrange
-        Food food1 = new Food(1L, "Pollo", "Carnicería", UnitMeasure.GR, 100,
+        FoodDTO foodDTO = new FoodDTO(1L, "Pollo", "Carnicería", UnitMeasure.GR, 100,
+                new BigDecimal("100.00"), new BigDecimal("200.00"), new BigDecimal("50.00"), new BigDecimal("370.00"), new BigDecimal("1.20"));
+        Food food = new Food(1L, "Pollo", "Carnicería", UnitMeasure.GR, 100,
                 new BigDecimal("100.00"), new BigDecimal("200.00"), new BigDecimal("50.00"), new BigDecimal("370.00"), new BigDecimal("1.20"));
 
-        when(foodService.saveFood(food1)).thenReturn(food1);
+        when(foodMapper.toEntity(foodDTO)).thenReturn(food);
+        when(foodService.saveFood(food)).thenReturn(food);
+        when(foodMapper.toDTO(food)).thenReturn(foodDTO);
 
         // Act
-        ResponseEntity<Food> response = foodController.saveFood(food1);
+        ResponseEntity<FoodDTO> response = foodController.saveFood(foodDTO);
 
         // Assert
         assertEquals(HttpStatus.CREATED, response.getStatusCode());
-        assertEquals(food1, response.getBody());
-        verify(foodService).saveFood(food1);
+        assertEquals(foodDTO, response.getBody());
+        verify(foodMapper).toEntity(foodDTO);
+        verify(foodService).saveFood(food);
+        verify(foodMapper).toDTO(food);
     }
 
     @Test
     void updateFood() {
         // Arrange
         Long idFood = 1L;
-        Food updatedFood = new Food(idFood, "Atún", "Calvo", UnitMeasure.GR, 80,
+        FoodDTO updatedDto = new FoodDTO(null, "Atún", "Calvo", UnitMeasure.GR, 80,
+                new BigDecimal("22.00"), new BigDecimal("0.00"), new BigDecimal("3.00"), new BigDecimal("110.00"), new BigDecimal("1.20"));
+        Food updatedFood = new Food(null, "Atún", "Calvo", UnitMeasure.GR, 80,
+                new BigDecimal("22.00"), new BigDecimal("0.00"), new BigDecimal("3.00"), new BigDecimal("110.00"), new BigDecimal("1.20"));
+        FoodDTO resultDto = new FoodDTO(idFood, "Atún", "Calvo", UnitMeasure.GR, 80,
                 new BigDecimal("22.00"), new BigDecimal("0.00"), new BigDecimal("3.00"), new BigDecimal("110.00"), new BigDecimal("1.20"));
 
+        when(foodMapper.toEntity(updatedDto)).thenReturn(updatedFood);
+        when(foodMapper.toDTO(updatedFood)).thenReturn(resultDto);
+
         // Act
-        ResponseEntity<Food> response = foodController.updateFood(idFood, updatedFood);
+        ResponseEntity<FoodDTO> response = foodController.updateFood(idFood, updatedDto);
 
         // Assert
         assertEquals(HttpStatus.OK, response.getStatusCode());
-        assertEquals(updatedFood, response.getBody());
+        assertEquals(resultDto, response.getBody());
         assertEquals(idFood, updatedFood.getIdFood());
         verify(foodService).updateFood(updatedFood);
+        verify(foodMapper).toEntity(updatedDto);
+        verify(foodMapper).toDTO(updatedFood);
     }
 
     @Test

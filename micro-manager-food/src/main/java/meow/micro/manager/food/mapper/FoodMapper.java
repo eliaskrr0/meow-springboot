@@ -10,4 +10,6 @@ import java.util.List;
 public interface FoodMapper {
     FoodDTO toDTO(Food food);
     List<FoodDTO> toDTOList(List<Food> foods);
+    Food toEntity(FoodDTO dto);
+    List<Food> toEntityList(List<FoodDTO> dtos);
 }
