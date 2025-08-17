@@ -1,6 +1,7 @@
 package meow.micro.user.profile.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import meow.common.dto.user.profile.enums.TypeGender;
 import meow.common.dto.user.profile.enums.TypeTarget;
@@ -27,6 +28,14 @@ public class UserProfileController {
     @RequestMapping("/{id}")
     public ResponseEntity<UserProfile> getProfile(@PathVariable Long id) {
         return ResponseEntity.ok(service.findById(id));
+    }
+
+    @ApiResponse(responseCode = "201", description = "Perfil del usuario creado correctamente")
+    @Operation(summary = "Guarda el perfil del usuario")
+    @PostMapping
+    public ResponseEntity<UserProfile> saveProfile(@RequestBody UserProfile userProfile) {
+        UserProfile profileSaved = service.updateProfile(userProfile);
+        return ResponseEntity.ok(profileSaved);
     }
 
     @Operation(summary = "Obtiene todos los tipos de genero")
