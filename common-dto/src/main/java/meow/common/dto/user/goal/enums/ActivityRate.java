@@ -1,6 +1,7 @@
 package meow.common.dto.user.goal.enums;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 public enum ActivityRate {
@@ -23,7 +24,7 @@ public enum ActivityRate {
         return value;
     }
 
-    @JsonValue
+    @JsonProperty("factor")
     public double getFactor() { return factor; }
 
     @JsonCreator
