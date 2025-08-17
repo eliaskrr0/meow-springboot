@@ -4,5 +4,5 @@ CREATE TABLE tb_user_profile (
    name VARCHAR(30) NOT NULL UNIQUE,
    age INT NOT NULL,
    height INT NOT NULL,
-   weight BIGINT NOT NULL,
+   weight BIGINT NOT NULL
 );

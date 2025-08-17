@@ -5,6 +5,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import meow.common.dto.user.goal.enums.ActivityRate;
 import meow.common.dto.user.profile.enums.TypeTarget;
 import meow.micro.user.goal.model.UserGoal;
 import meow.micro.user.goal.service.UserGoalService;
@@ -45,7 +46,7 @@ public class UserGoalController {
             @ApiResponse(responseCode = "404", description = "Alimento no encontrado")
     })
     @Operation(summary = "Actualiza el objetivo del usuario")
-    @PutMapping("{/id}")
+    @PutMapping("/{id}")
     public ResponseEntity<UserGoal> updateUserGoal(@PathVariable Long id, @Valid @RequestBody UserGoal goal) {
         goal.setIdUserGoal(id);
         UserGoal updatedGoal = service.updateUserGoal(goal);
@@ -56,5 +57,11 @@ public class UserGoalController {
     @GetMapping
     public ResponseEntity<List<TypeTarget>> getTypeTargets() {
         return ResponseEntity.ok(Arrays.asList(TypeTarget.values()));
+    }
+
+    @Operation(summary = "Obtiene los posibles ritmos físicos")
+    @GetMapping("/activity-rates")
+    public ResponseEntity<List<ActivityRate>> getActivityRates() {
+        return ResponseEntity.ok(Arrays.asList(ActivityRate.values()));
     }
 }
