@@ -8,6 +8,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import meow.common.dto.user.goal.enums.ActivityRate;
+import meow.common.dto.user.goal.enums.converter.ActivityRateConverter;
+import meow.common.dto.user.profile.enums.TypeTarget;
+import meow.common.dto.user.profile.enums.converter.TypeTargetConverter;
 import meow.micro.user.goal.utils.messages.ValidationMessages;
 
 import java.math.BigDecimal;
@@ -23,7 +26,7 @@ public class UserGoal {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_user_goal")
-    private Long idUser;
+    private Long idUserGoal;
 
     @Schema(description = ValidationMessages.COLUMN_PROTEIN_AMOUNT_SCHEMA, example = "100.00")
     @NotNull(message = ValidationMessages.COLUMN_PROTEIN_AMOUNT_REQUIRED)
@@ -53,15 +56,20 @@ public class UserGoal {
     @Column(name = "calories_target")
     private BigDecimal caloriesTarget;
 
-    @Schema(description = ValidationMessages.COLUMN_TYPE_TARGET_SCHEMA, example = "Manzana")
-    @Size(message = ValidationMessages.COLUMN_TYPE_TARGET_SIZE, min = 1, max = 20)
-    @NotBlank(message = ValidationMessages.COLUMN_TYPE_TARGET_NOT_BLANK)
+    @Schema(description = ValidationMessages.COLUMN_PROFILE_ID_SCHEMA, example = "1")
+    @NotNull(message = ValidationMessages.COLUMN_PROFILE_ID_REQUIRED)
+    @Column(name = "id_user_profile")
+    private Long idUserProfile;
+
+    @Schema(description = ValidationMessages.COLUMN_TYPE_TARGET_SCHEMA, example = "Mantener peso")
+    @NotNull(message = ValidationMessages.COLUMN_TYPE_TARGET_NOT_BLANK)
     @Column(name = "type_target")
-    private String typeTarget;
+    @Convert(converter = TypeTargetConverter.class)
+    private TypeTarget typeTarget;
 
     @Schema(description = ValidationMessages.COLUMN_ACTIVITY_RATE_SCHEMA, example = "Sedentario")
-    @Size(message = ValidationMessages.COLUMN_ACTIVITY_RATE_SIZE, min = 1, max = 10)
-    @NotBlank(message = ValidationMessages.COLUMN_ACTIVITY_RATE_NOT_BLANK)
+    @NotNull(message = ValidationMessages.COLUMN_ACTIVITY_RATE_NOT_BLANK)
     @Column(name = "activity_rate")
+    @Convert(converter = ActivityRateConverter.class)
     private ActivityRate activityRate;
 }

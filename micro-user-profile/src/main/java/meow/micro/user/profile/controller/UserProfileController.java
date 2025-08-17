@@ -29,12 +29,6 @@ public class UserProfileController {
         return ResponseEntity.ok(service.findById(id));
     }
 
-    @Operation(summary = "Obtiene todos los tipos de objetivos")
-    @GetMapping("/target")
-    public ResponseEntity<List<TypeTarget>> getTypeTargets() {
-        return ResponseEntity.ok(Arrays.asList(TypeTarget.values()));
-    }
-
     @Operation(summary = "Obtiene todos los tipos de genero")
     @GetMapping("/gender")
     public ResponseEntity<List<TypeGender>> getTypeGender() {

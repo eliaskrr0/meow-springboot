@@ -44,3 +44,7 @@ spring:
     baseline-on-migrate: true
     baseline-version: 0    # Ajustar según la versión inicial requerida
     validate-on-migrate: true
+
+external:
+  user-profile-service:
+    url: http://localhost:8082

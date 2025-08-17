@@ -44,3 +44,7 @@ spring:
     table: ${DEV_DB_TABLE_FLYWAY_HISTORY_NAME}
     baseline-on-migrate: true
     baseline-version: 0    # Ajustar según la versión inicial requerida
+
+external:
+  user-profile-service:
+    url: http://localhost:8082

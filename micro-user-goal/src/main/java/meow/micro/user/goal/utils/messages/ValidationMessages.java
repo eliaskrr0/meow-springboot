@@ -27,6 +27,9 @@ public class ValidationMessages {
     public static final String COLUMN_CALORIES_REQUIRED = "Las calorías son obligatorias";
     public static final String COLUMN_CALORIES_POSITIVE = "Las calorías deben ser un valor positivo";
 
+    public static final String COLUMN_PROFILE_ID_SCHEMA = "ID del perfil del usuario asociado";
+    public static final String COLUMN_PROFILE_ID_REQUIRED = "El perfil del usuario es obligatorio";
+
     public static final String FRONTEND_URL = "http://localhost:3000";
     public static final String[] ALLOWED_METHODS = {"GET", "POST", "PUT", "DELETE"};
     public static final String[] ALLOWED_HEADERS = {"*"};

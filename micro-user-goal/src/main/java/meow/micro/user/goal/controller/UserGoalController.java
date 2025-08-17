@@ -5,11 +5,15 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import meow.common.dto.user.profile.enums.TypeTarget;
 import meow.micro.user.goal.model.UserGoal;
 import meow.micro.user.goal.service.UserGoalService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Arrays;
+import java.util.List;
 
 @Tag(name = "User goal", description = "API del objetivo del usuario")
 @RestController
@@ -43,9 +47,14 @@ public class UserGoalController {
     @Operation(summary = "Actualiza el objetivo del usuario")
     @PutMapping("{id}")
     public ResponseEntity<UserGoal> updateUserGoal(@PathVariable Long id, @Valid @RequestBody UserGoal goal) {
-        goal.setIdUser(id);
+        goal.setIdUserGoal(id);
         UserGoal updatedGoal = service.updateUserGoal(goal);
         return ResponseEntity.ok(updatedGoal);
     }
 
+    @Operation(summary = "Obtiene todos los tipos de objetivos")
+    @GetMapping
+    public ResponseEntity<List<TypeTarget>> getTypeTargets() {
+        return ResponseEntity.ok(Arrays.asList(TypeTarget.values()));
+    }
 }

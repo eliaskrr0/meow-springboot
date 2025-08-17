@@ -8,7 +8,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import meow.common.dto.user.profile.enums.TypeGender;
-import meow.common.dto.user.profile.enums.TypeTarget;
 import meow.micro.user.profile.utils.messages.ValidationMessages;
 import org.hibernate.validator.constraints.Range;
 
@@ -48,9 +47,4 @@ public class UserProfile {
     @NotNull(message = ValidationMessages.COLUMN_HEIGHT_REQUIRED)
     @Column(name = "height", nullable = false)
     private int height;
-
-    @Schema(description = ValidationMessages.COLUMN_TYPE_TARGET_SCHEMA, example = "Perder 2kg de peso")
-    @NotNull(message = ValidationMessages.COLUMN_TYPE_TARGET_REQUIRED)
-    @Column(name = "type_target", nullable = false)
-    private TypeTarget typeTarget;
 }

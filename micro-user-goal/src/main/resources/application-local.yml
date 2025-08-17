@@ -36,3 +36,7 @@ spring:
     table: flyway_schema_history_user_goal
     baseline-on-migrate: true
     baseline-version: 0    # Ajustar según la versión inicial requerida
+
+external:
+  user-profile-service:
+    url: http://localhost:8082
