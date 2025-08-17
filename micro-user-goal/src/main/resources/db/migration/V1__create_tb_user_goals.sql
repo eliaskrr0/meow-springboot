@@ -6,5 +6,5 @@ CREATE TABLE tb_user_goal (
     calories_target DECIMAL(10,2) NOT NULL,
     id_user_profile BIGINT NOT NULL,
     type_target VARCHAR(18) NOT NULL,
-    activity_target VARCHAR(10) NOT NULL
+    activity_rate VARCHAR(10) NOT NULL
 );
