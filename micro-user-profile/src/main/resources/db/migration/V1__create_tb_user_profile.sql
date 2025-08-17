@@ -3,5 +3,6 @@ CREATE TABLE tb_user_profile (
    gender VARCHAR(10) NOT NULL,
    name VARCHAR(30) NOT NULL UNIQUE,
    age INT NOT NULL,
-   height INT NOT NULL
+   height INT NOT NULL,
+   weight BIGINT NOT NULL,
 );

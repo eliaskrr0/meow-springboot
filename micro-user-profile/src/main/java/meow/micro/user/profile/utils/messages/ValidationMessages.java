@@ -16,6 +16,10 @@ public class ValidationMessages {
     public static final String COLUMN_HEIGHT_REQUIRED = "La altura es obligatoria";
     public static final String COLUMN_HEIGHT_RANGE = "La altura debe estar entre 2 y 3 dígitos";
 
+    public static final String COLUMN_WEIGHT_SCHEMA = "Peso del usuario";
+    public static final String COLUMN_WEIGHT_REQUIRED = "El peso es obligatoria";
+    public static final String COLUMN_WEIGHT_POSITIVE = "El peso deben ser un valor positivo";
+
     public static final String COLUMN_GENDER_SCHEMA = "Genero del usuario";
     public static final String COLUMN_GENDER_REQUIRED = "Debe seleccionar un genero";
 

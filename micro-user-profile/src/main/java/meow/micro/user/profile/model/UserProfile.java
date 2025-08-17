@@ -11,6 +11,8 @@ import meow.common.dto.user.profile.enums.TypeGender;
 import meow.micro.user.profile.utils.messages.ValidationMessages;
 import org.hibernate.validator.constraints.Range;
 
+import java.math.BigDecimal;
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
@@ -47,4 +49,11 @@ public class UserProfile {
     @NotNull(message = ValidationMessages.COLUMN_HEIGHT_REQUIRED)
     @Column(name = "height", nullable = false)
     private int height;
+
+    @Schema(description = ValidationMessages.COLUMN_WEIGHT_SCHEMA, example = "75.3")
+    @NotNull(message = ValidationMessages.COLUMN_WEIGHT_REQUIRED)
+    @PositiveOrZero(message = ValidationMessages.COLUMN_WEIGHT_POSITIVE)
+    @Digits(integer = 8, fraction = 2)
+    @Column(name = "weight", nullable = false)
+    private BigDecimal weight;
 }
