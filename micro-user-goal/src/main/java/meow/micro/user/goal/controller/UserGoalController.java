@@ -35,7 +35,7 @@ public class UserGoalController {
     @ApiResponse(responseCode = "201", description = "Objetivo del usuario creado correctamente")
     @Operation(summary = "Guarda el objetivo del usuario")
     @PostMapping
-    public ResponseEntity<UserGoal> saveUserGoal(@RequestBody UserGoal userGoal){
+    public ResponseEntity<UserGoal> saveUserGoal(@Valid @RequestBody UserGoal userGoal){
         UserGoal goal = service.saveUserGoal(userGoal);
         return ResponseEntity.status(HttpStatus.CREATED).body(goal);
     }
@@ -45,7 +45,7 @@ public class UserGoalController {
             @ApiResponse(responseCode = "404", description = "Alimento no encontrado")
     })
     @Operation(summary = "Actualiza el objetivo del usuario")
-    @PutMapping("{id}")
+    @PutMapping("{/id}")
     public ResponseEntity<UserGoal> updateUserGoal(@PathVariable Long id, @Valid @RequestBody UserGoal goal) {
         goal.setIdUserGoal(id);
         UserGoal updatedGoal = service.updateUserGoal(goal);
