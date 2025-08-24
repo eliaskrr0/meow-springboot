@@ -35,6 +35,7 @@ public class UserGoalServiceImpl implements UserGoalService {
         if (userGoalRepository.existsById(userGoal.getIdUserGoal())) {
             UserProfileDTO profile = userProfileClient.getProfile(userGoal.getIdUserProfile());
             userGoal.setCaloriesTarget(calculateCalories(userGoal.getTypeTarget(), userGoal.getActivityRate(), profile));
+            userGoal.setCaloriesTarget(BigDecimal.ZERO);
             return userGoalRepository.save(userGoal);
         } else {
             throw new ResourceNotFoundException(userGoal.getIdUserGoal());
