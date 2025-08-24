@@ -7,9 +7,9 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @OpenAPIDefinition(
         info = @Info(
-                title = "Manager Food API",
+                title = "User Profile API",
                 version = "1.0",
-                description = "API de gestión alimentos"
+                description = "API de gestión de perfil de usuario"
         )
 )
 public class SwaggerConfig {

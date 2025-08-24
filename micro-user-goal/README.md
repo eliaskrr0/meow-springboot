@@ -1,5 +1,5 @@
 # Información sobre el servicio
-- Información sobre las calorías a consumir según los objetivos del usuario.
+- Información sobre las calorías y macros a consumir según los objetivos del usuario.
 
 # Configuración del entorno
 - Java 21 de Eclipse Temurin.
