@@ -9,8 +9,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import meow.common.dto.user.goal.enums.ActivityRate;
 import meow.common.dto.user.goal.enums.converter.ActivityRateConverter;
-import meow.common.dto.user.profile.enums.TypeTarget;
-import meow.common.dto.user.profile.enums.converter.TypeTargetConverter;
+import meow.common.dto.user.goal.enums.converter.TypeTarget;
+import meow.common.dto.user.goal.enums.converter.TypeTargetConverter;
 import meow.micro.user.goal.utils.messages.ValidationMessages;
 
 import java.math.BigDecimal;

@@ -2,7 +2,7 @@ package meow.micro.user.goal.service.impl;
 
 import meow.common.dto.user.goal.enums.ActivityRate;
 import meow.common.dto.user.profile.enums.TypeGender;
-import meow.common.dto.user.profile.enums.TypeTarget;
+import meow.common.dto.user.goal.enums.converter.TypeTarget;
 import meow.common.dto.user.profile.UserProfileDTO;
 import meow.micro.user.goal.client.UserProfileClient;
 import meow.micro.user.goal.exception.ResourceNotFoundException;

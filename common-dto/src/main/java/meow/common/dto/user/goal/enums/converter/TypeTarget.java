@@ -1,4 +1,4 @@
-package meow.common.dto.user.profile.enums;
+package meow.common.dto.user.goal.enums.converter;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;

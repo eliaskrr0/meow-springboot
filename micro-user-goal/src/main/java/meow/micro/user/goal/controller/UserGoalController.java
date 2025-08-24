@@ -6,7 +6,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import meow.common.dto.user.goal.enums.ActivityRate;
-import meow.common.dto.user.profile.enums.TypeTarget;
+import meow.common.dto.user.goal.enums.converter.TypeTarget;
 import meow.micro.user.goal.model.UserGoal;
 import meow.micro.user.goal.service.UserGoalService;
 import org.springframework.http.HttpStatus;

@@ -1,6 +1,5 @@
-package meow.common.dto.user.profile.enums.converter;
+package meow.common.dto.user.goal.enums.converter;
 
-import meow.common.dto.user.profile.enums.TypeTarget;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
