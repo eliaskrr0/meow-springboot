@@ -9,7 +9,6 @@ import meow.common.dto.user.goal.enums.ActivityRate;
 import meow.common.dto.user.goal.enums.TypeTarget;
 import meow.micro.user.goal.model.UserGoal;
 import meow.micro.user.goal.service.UserGoalService;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
