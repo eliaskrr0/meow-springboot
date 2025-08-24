@@ -6,6 +6,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 @ResponseStatus(HttpStatus.NOT_FOUND)
 public class ResourceNotFoundException extends RuntimeException {
     public ResourceNotFoundException(Object id) {
-        super("No se puede recuperar obtener la receta con el id: " + id);
+        super("No se puede obtener los objetivos del usuario con el id: " + id);
     }
 }
