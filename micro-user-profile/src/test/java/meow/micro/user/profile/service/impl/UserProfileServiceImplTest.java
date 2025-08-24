@@ -18,7 +18,6 @@ import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class UserProfileServiceImplTest {
-
     @Mock
     private UserProfileRepository repository;
 
@@ -37,12 +36,13 @@ class UserProfileServiceImplTest {
     }
 
     @Test
-    void findById_whenProfileDoesNotExist_shouldReturnNull() {
+    void findById_whenProfileDoesNotExist_shouldThrowException() {
         when(repository.findById(1L)).thenReturn(Optional.empty());
 
-        UserProfile result = service.findById(1L);
+        assertThatThrownBy(() -> service.findById(1L))
+                .isInstanceOf(ResourceNotFoundException.class)
+                .hasMessageContaining("1");
 
-        assertThat(result).isNull();
         verify(repository).findById(1L);
     }
 

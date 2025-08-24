@@ -16,7 +16,8 @@ public class UserProfileServiceImpl implements UserProfileService {
 
     @Override
     public UserProfile findById(Long id) {
-        return repository.findById(id).orElse(null);
+        return repository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException(id));
     }
 
     @Override
