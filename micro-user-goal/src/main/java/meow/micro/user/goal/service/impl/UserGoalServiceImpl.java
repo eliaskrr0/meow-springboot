@@ -34,8 +34,17 @@ public class UserGoalServiceImpl implements UserGoalService {
     public UserGoal updateUserGoal(UserGoal userGoal) {
         if (userGoalRepository.existsById(userGoal.getIdUserGoal())) {
             UserProfileDTO profile = userProfileClient.getProfile(userGoal.getIdUserProfile());
+
+            // Calculo de calorias
             userGoal.setCaloriesTarget(calculateCalories(userGoal.getTypeTarget(), userGoal.getActivityRate(), profile));
-            userGoal.setCaloriesTarget(BigDecimal.ZERO);
+
+            // Calculo de macros
+            Macros macros = calculateMacros(userGoal.getTypeTarget(), userGoal.getActivityRate(), profile);
+            userGoal.setCaloriesTarget(macros.calories());
+            userGoal.setProteinTarget(BigDecimal.valueOf(macros.proteinG()));
+            userGoal.setCarbsTarget(BigDecimal.valueOf(macros.carbsG()));
+            userGoal.setFatTarget(BigDecimal.valueOf(macros.fatG()));
+
             return userGoalRepository.save(userGoal);
         } else {
             throw new ResourceNotFoundException(userGoal.getIdUserGoal());
@@ -62,5 +71,69 @@ public class UserGoalServiceImpl implements UserGoalService {
             case LOSE_WEIGHT_AGGRESSIVELY -> 0.80;
         };
         return BigDecimal.valueOf(maintenance * factor).setScale(2, RoundingMode.HALF_UP);
+    }
+
+    private Macros calculateMacros(TypeTarget target, ActivityRate activityRate, UserProfileDTO profile) {
+        double calories = calculateCalories(target, activityRate, profile).doubleValue();
+        double height = profile.getHeight();
+        double weightKg = 22 * Math.pow(height / 100.0, 2);
+
+        double protPerKg = switch (target) {
+            case LOSE_WEIGHT_AGGRESSIVELY -> 2.4;
+            case LOSE_WEIGHT_MODERATELY -> 2.2;
+            case LOSE_WEIGHT_SLOWLY, MAINTAIN_WEIGHT -> 2.0;
+            case GAIN_WEIGHT_SLOWLY, GAIN_WEIGHT_MODERATELY, GAIN_WEIGHT_AGGRESSIVELY -> 1.8;
+        };
+        double fatPerKg = switch (target) {
+            case LOSE_WEIGHT_AGGRESSIVELY -> 0.6;
+            case LOSE_WEIGHT_MODERATELY -> 0.7;
+            case LOSE_WEIGHT_SLOWLY -> 0.8;
+            case MAINTAIN_WEIGHT -> 0.9;
+            case GAIN_WEIGHT_SLOWLY, GAIN_WEIGHT_MODERATELY, GAIN_WEIGHT_AGGRESSIVELY -> 0.8;
+        };
+
+        double minProtPerKg = 1.6;
+        double minFatPerKg = 0.6;
+
+        int proteinG = (int) Math.round(protPerKg * weightKg);
+        int fatG = (int) Math.round(fatPerKg * weightKg);
+
+        double kcalFromProt = proteinG * 4.0;
+        double kcalFromFat = fatG * 9.0;
+        double kcalLeft = calories - kcalFromProt - kcalFromFat;
+
+        int minFatG = (int) Math.round(minFatPerKg * weightKg);
+        int minProtG = (int) Math.round(minProtPerKg * weightKg);
+
+        if (kcalLeft < 0) {
+            int reducibleFat = Math.max(0, fatG - minFatG);
+            int needFromFat = (int) Math.ceil((-kcalLeft) / 9.0);
+            int reduceFat = Math.min(reducibleFat, needFromFat);
+            fatG -= reduceFat;
+
+            kcalFromFat = fatG * 9.0;
+            kcalLeft = calories - kcalFromProt - kcalFromFat;
+        }
+        if (kcalLeft < 0) {
+            int reducibleProt = Math.max(0, proteinG - minProtG);
+            int needFromProt = (int) Math.ceil((-kcalLeft) / 4.0);
+            int reduceProt = Math.min(reducibleProt, needFromProt);
+            proteinG -= reduceProt;
+
+            kcalFromProt = proteinG * 4.0;
+            kcalLeft = calories - kcalFromProt - (fatG * 9.0);
+        }
+
+        int carbsG = (int) Math.max(0, Math.round(kcalLeft / 4.0));
+
+        return new Macros(
+                BigDecimal.valueOf(calories).setScale(0, RoundingMode.HALF_UP),
+                proteinG,
+                carbsG,
+                fatG
+        );
+    }
+
+    private record Macros(BigDecimal calories, int proteinG, int carbsG, int fatG) {
     }
 }

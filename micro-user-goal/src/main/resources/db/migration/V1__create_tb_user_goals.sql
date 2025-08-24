@@ -5,6 +5,6 @@ CREATE TABLE tb_user_goal (
     fat_target DECIMAL(10,2) NOT NULL,
     calories_target DECIMAL(10,2) NOT NULL,
     id_user_profile BIGINT NOT NULL,
-    type_target VARCHAR(18) NOT NULL,
+    type_target VARCHAR(20) NOT NULL,
     activity_rate VARCHAR(10) NOT NULL
 );
