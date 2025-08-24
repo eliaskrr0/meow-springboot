@@ -2,6 +2,7 @@ package meow.common.dto.user.goal.enums.converter;
 
 import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;
+import meow.common.dto.user.goal.enums.TypeTarget;
 
 @Converter(autoApply = true)
 public class TypeTargetConverter implements AttributeConverter<TypeTarget, String> {

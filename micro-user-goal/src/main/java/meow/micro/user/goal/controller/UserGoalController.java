@@ -6,7 +6,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import meow.common.dto.user.goal.enums.ActivityRate;
-import meow.common.dto.user.goal.enums.converter.TypeTarget;
+import meow.common.dto.user.goal.enums.TypeTarget;
 import meow.micro.user.goal.model.UserGoal;
 import meow.micro.user.goal.service.UserGoalService;
 import org.springframework.http.HttpStatus;
@@ -33,14 +33,6 @@ public class UserGoalController {
         return ResponseEntity.ok(goal);
     }
 
-    @ApiResponse(responseCode = "201", description = "Objetivo del usuario creado correctamente")
-    @Operation(summary = "Guarda el objetivo del usuario")
-    @PostMapping("/save")
-    public ResponseEntity<UserGoal> saveUserGoal(@Valid @RequestBody UserGoal userGoal){
-        UserGoal goal = service.saveUserGoal(userGoal);
-        return ResponseEntity.status(HttpStatus.CREATED).body(goal);
-    }
-
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Alimento actualizado correctamente"),
             @ApiResponse(responseCode = "404", description = "Alimento no encontrado")
@@ -57,6 +49,7 @@ public class UserGoalController {
     @GetMapping("/targets")
     public ResponseEntity<List<TypeTarget>> getTypeTargets() {
         return ResponseEntity.ok(Arrays.asList(TypeTarget.values()));
+
     }
 
     @Operation(summary = "Obtiene los posibles ritmos físicos")

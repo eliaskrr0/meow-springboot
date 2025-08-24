@@ -2,7 +2,7 @@ package meow.micro.user.goal.service.impl;
 
 import meow.common.dto.user.goal.enums.ActivityRate;
 import meow.common.dto.user.profile.enums.TypeGender;
-import meow.common.dto.user.goal.enums.converter.TypeTarget;
+import meow.common.dto.user.goal.enums.TypeTarget;
 import meow.common.dto.user.profile.UserProfileDTO;
 import meow.micro.user.goal.client.UserProfileClient;
 import meow.micro.user.goal.exception.ResourceNotFoundException;
@@ -27,13 +27,6 @@ public class UserGoalServiceImpl implements UserGoalService {
     @Override
     public UserGoal getUserGoalById(Long id) {
         return userGoalRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException(id));
-    }
-
-    @Override
-    public UserGoal saveUserGoal(UserGoal userGoal) {
-        UserProfileDTO profile = userProfileClient.getProfile(userGoal.getIdUserProfile());
-        userGoal.setCaloriesTarget(calculateCalories(userGoal.getTypeTarget(), userGoal.getActivityRate(), profile));
-        return userGoalRepository.save(userGoal);
     }
 
     @Override
