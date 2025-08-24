@@ -49,23 +49,6 @@ class UserProfileControllerTest {
     }
 
     @Test
-    void saveProfile_whenDataIsValid_shouldReturnSavedProfile() throws Exception {
-        // Arrange
-        UserProfile profile = createUserProfile(1L);
-        when(service.updateProfile(any(UserProfile.class))).thenReturn(profile);
-
-        // Act & Assert
-        mockMvc.perform(post("/api/user/profile")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(profile)))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.idUserProfile").value(1L))
-                .andExpect(jsonPath("$.name").value("Juan"));
-
-        verify(service).updateProfile(any(UserProfile.class));
-    }
-
-    @Test
     void getTypeGender_shouldReturnAllGenders() throws Exception {
         mockMvc.perform(get("/api/user/profile/gender"))
                 .andExpect(status().isOk())

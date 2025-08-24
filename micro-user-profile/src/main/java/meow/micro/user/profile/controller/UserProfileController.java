@@ -5,6 +5,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import meow.common.dto.user.profile.enums.TypeGender;
 import meow.micro.user.profile.model.UserProfile;
+import meow.micro.user.profile.service.UserProfileService;
 import meow.micro.user.profile.service.impl.UserProfileServiceImpl;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,9 +17,9 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/user/profile")
 public class UserProfileController {
-    private final UserProfileServiceImpl service;
+    private final UserProfileService service;
 
-    public UserProfileController(UserProfileServiceImpl service) {
+    public UserProfileController(UserProfileService service) {
         this.service = service;
     }
 
@@ -26,14 +27,6 @@ public class UserProfileController {
     @RequestMapping("/{id}")
     public ResponseEntity<UserProfile> getProfile(@PathVariable Long id) {
         return ResponseEntity.ok(service.findById(id));
-    }
-
-    @ApiResponse(responseCode = "201", description = "Perfil del usuario creado correctamente")
-    @Operation(summary = "Guarda el perfil del usuario")
-    @PostMapping
-    public ResponseEntity<UserProfile> saveProfile(@RequestBody UserProfile userProfile) {
-        UserProfile profileSaved = service.updateProfile(userProfile);
-        return ResponseEntity.ok(profileSaved);
     }
 
     @Operation(summary = "Obtiene todos los tipos de genero")
