@@ -175,7 +175,7 @@
 									<excludes>
 										<exclude>**/AppProperties.class</exclude>
 										<exclude>**/SwaggerConfig.class</exclude>
-										<exclude>**/MicroManagerRecipeApplicationTests.class</exclude>
+										<exclude>**/MicroUserGoalApplication.class</exclude>
 									</excludes>
 								</rule>
 							</rules>

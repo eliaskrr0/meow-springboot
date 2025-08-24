@@ -11,14 +11,15 @@ import meow.micro.user.goal.repository.UserGoalRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.EnumSource;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.lang.reflect.Method;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -76,31 +77,54 @@ class UserGoalServiceImplTest {
         assertThrows(ResourceNotFoundException.class, () -> userGoalServiceImpl.updateUserGoal(userGoal));
     }
 
-    @Test
-    void calculateCalories_verifyUserIsMasculine() {
-        // Arrange
-        UserProfileDTO profile = getUserProfileDTOList().getFirst();
+    @ParameterizedTest
+    @EnumSource(TypeTarget.class)
+    void calculateCalories_returnsExpectedValue_forMasculine(TypeTarget target) throws Exception {
+        UserProfileDTO profile = new UserProfileDTO(1L, "Mohammed", TypeGender.MASCULINE, 25, 173, BigDecimal.ZERO);
 
-        // Act
-        assertEquals(TypeGender.MASCULINE, profile.getGender());
+        BigDecimal result = invokeCalculateCalories(target, ActivityRate.LIGHT, profile);
+        BigDecimal expected = expectedCalories(target, ActivityRate.LIGHT, profile);
 
+        assertEquals(expected, result);
     }
 
-    @Test
-    void calculateCalories_verifyUserIsFeminine() {
-        // Arrange
-        UserProfileDTO profile = getUserProfileDTOList().get(1);
+    @ParameterizedTest
+    @EnumSource(TypeTarget.class)
+    void calculateCalories_returnsExpectedValue_forFeminine(TypeTarget target) throws Exception {
+        UserProfileDTO profile = new UserProfileDTO(2L, "Sokaina", TypeGender.FEMININE, 19, 163, BigDecimal.ZERO);
 
-        // Act
-        assertEquals(TypeGender.FEMININE, profile.getGender());
+        BigDecimal result = invokeCalculateCalories(target, ActivityRate.MODERATE, profile);
+        BigDecimal expected = expectedCalories(target, ActivityRate.MODERATE, profile);
+
+        assertEquals(expected, result);
     }
 
-    @Test
-    void calculateCalories_verifyFactor() throws Exception {
-        UserGoal goal = getUserGoalList().getFirst();
-        double result = TypeTarget.GAIN_WEIGHT_SLOWLY == goal.getTypeTarget() ? 1.10 : 1.20;
+    private BigDecimal invokeCalculateCalories(TypeTarget target, ActivityRate activityRate, UserProfileDTO profile) throws Exception {
+        Method method = UserGoalServiceImpl.class.getDeclaredMethod("calculateCalories", TypeTarget.class, ActivityRate.class, UserProfileDTO.class);
+        method.setAccessible(true);
+        return (BigDecimal) method.invoke(userGoalServiceImpl, target, activityRate, profile);
+    }
 
-        assertEquals(1.10, result, 1e-9);
+    private BigDecimal expectedCalories(TypeTarget target, ActivityRate activityRate, UserProfileDTO profile) {
+        double height = profile.getHeight();
+        double weight = 22 * Math.pow(height / 100.0, 2);
+        double bmr;
+        if (profile.getGender() == TypeGender.MASCULINE) {
+            bmr = 10 * weight + 6.25 * height - 5 * profile.getAge() + 5;
+        } else {
+            bmr = 10 * weight + 6.25 * height - 5 * profile.getAge() - 161;
+        }
+        double maintenance = bmr * activityRate.getFactor();
+        double factor = switch (target) {
+            case GAIN_WEIGHT_AGGRESSIVELY -> 1.20;
+            case GAIN_WEIGHT_MODERATELY -> 1.15;
+            case GAIN_WEIGHT_SLOWLY -> 1.10;
+            case MAINTAIN_WEIGHT -> 1.00;
+            case LOSE_WEIGHT_SLOWLY -> 0.90;
+            case LOSE_WEIGHT_MODERATELY -> 0.85;
+            case LOSE_WEIGHT_AGGRESSIVELY -> 0.80;
+        };
+        return BigDecimal.valueOf(maintenance * factor).setScale(2, RoundingMode.HALF_UP);
     }
 
     private static List<UserGoal> getUserGoalList() {
@@ -108,12 +132,5 @@ class UserGoalServiceImplTest {
         UserGoal userGoalSecond = new UserGoal(2L, new BigDecimal("54.2"), new BigDecimal("180.56"), new BigDecimal("25.68"), new BigDecimal("1246"), 2L, TypeTarget.LOSE_WEIGHT_MODERATELY, ActivityRate.SEDENTARY);
 
         return List.of(userGoalFirst, userGoalSecond);
-    }
-
-    private static List<UserProfileDTO> getUserProfileDTOList() {
-        UserProfileDTO userProfileFirst = new UserProfileDTO(1L, "Mohammed", TypeGender.MASCULINE, 173, 25, new BigDecimal("73.2"));
-        UserProfileDTO userProfileSecond = new UserProfileDTO(2L, "Sokaina", TypeGender.FEMININE, 163, 19, new BigDecimal("50.2"));
-
-        return List.of(userProfileFirst, userProfileSecond);
     }
 }

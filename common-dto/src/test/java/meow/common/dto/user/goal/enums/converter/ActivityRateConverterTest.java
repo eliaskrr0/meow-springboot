@@ -5,7 +5,7 @@ import jakarta.persistence.Converter;
 import meow.common.dto.user.goal.enums.ActivityRate;
 
 @Converter(autoApply = true)
-class ActivityRateConverter implements AttributeConverter<ActivityRate, String> {
+class ActivityRateConverterTest implements AttributeConverter<ActivityRate, String> {
 
     @Override
     public String convertToDatabaseColumn(ActivityRate attribute) {

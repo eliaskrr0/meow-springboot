@@ -19,6 +19,7 @@ public class UserGoalServiceImpl implements UserGoalService {
     private final UserGoalRepository userGoalRepository;
     private final UserProfileClient userProfileClient;
 
+
     public UserGoalServiceImpl(UserGoalRepository userGoalRepository, UserProfileClient userProfileClient) {
         this.userGoalRepository = userGoalRepository;
         this.userProfileClient = userProfileClient;
