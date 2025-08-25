@@ -1,5 +1,5 @@
 # Información sobre el servicio
-- Configura los datos del perfil de usuario como su nombre, edad, altura y objetivos.
+- Configura los datos del perfil de usuario como su nombre, edad, altura, peso, etc.
 
 # Configuración del entorno
 - Java 21 de Eclipse Temurin.
