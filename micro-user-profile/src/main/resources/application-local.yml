@@ -13,7 +13,7 @@ spring:
             readTimeout: 5000
 
   datasource:
-    url: jdbc:postgresql://localhost:5432/meow
+    url: jdbc:postgresql://host.docker.internal:5432/meow
     username: survidia
     password: survidia123
 
