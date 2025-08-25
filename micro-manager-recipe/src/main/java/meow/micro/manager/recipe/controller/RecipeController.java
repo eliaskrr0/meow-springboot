@@ -26,7 +26,7 @@ public class RecipeController {
     }
 
     @Operation(summary = "Obtiene todas las recetas")
-    @GetMapping("/list")
+    @GetMapping
     public ResponseEntity<List<Recipe>> getAllRecipes() {
         return ResponseEntity.ok(recipeService.getAllRecipes());
     }
@@ -45,7 +45,7 @@ public class RecipeController {
 
     @ApiResponse(responseCode = "201", description = "Receta creada correctamente")
     @Operation(summary = "Guarda una receta")
-    @PostMapping("/add")
+    @PostMapping
     public ResponseEntity<Recipe> saveRecipe(@Valid @RequestBody Recipe recipe) {
         return ResponseEntity.status(HttpStatus.CREATED).body(recipeService.saveRecipe(recipe));
     }
@@ -61,7 +61,7 @@ public class RecipeController {
             @ApiResponse(responseCode = "404", description = "Alimento no encontrado")
     })
     @Operation(summary = "Actualiza alimento filtrando por su ID")
-    @PutMapping("/update/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<Recipe> updateRecipe(@PathVariable Long id, @Valid @RequestBody Recipe recipe) {
         recipe.setIdRecipe(id);
         Recipe updated = recipeService.updateRecipe(recipe);
@@ -73,7 +73,7 @@ public class RecipeController {
             @ApiResponse(responseCode = "404", description = "Alimento no encontrado")
     })
     @Operation(summary = "Elimina alimento filtrando por su ID")
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteRecipe(@PathVariable Long id) {
         recipeService.deleteRecipe(id);
         return ResponseEntity.noContent().build();

@@ -30,7 +30,7 @@ public class FoodController {
     }
 
     @Operation(summary = "Obtiene todos los alimentos")
-    @GetMapping("/list")
+    @GetMapping
     public ResponseEntity<List<FoodDTO>> getAllFoods() {
         List<Food> foods = foodService.getAllFoods();
         return ResponseEntity.ok(foodMapper.toDTOList(foods));
@@ -52,7 +52,7 @@ public class FoodController {
 
     @ApiResponse(responseCode = "201", description = "Alimento creado correctamente")
     @Operation(summary = "Guarda un alimento")
-    @PostMapping("/add")
+    @PostMapping
     public ResponseEntity<FoodDTO> saveFood(@Valid @RequestBody FoodDTO foodDTO) {
         Food food = foodMapper.toEntity(foodDTO);
         Food saved = foodService.saveFood(food);
@@ -64,7 +64,7 @@ public class FoodController {
             @ApiResponse(responseCode = "404", description = "Alimento no encontrado")
     })
     @Operation(summary = "Actualiza alimento filtrando por su ID")
-    @PutMapping("/update/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<FoodDTO> updateFood(@PathVariable Long id, @Valid @RequestBody FoodDTO foodDTO) {
         Food food = foodMapper.toEntity(foodDTO);
         food.setIdFood(id);
@@ -77,7 +77,7 @@ public class FoodController {
             @ApiResponse(responseCode = "404", description = "Alimento no encontrado")
     })
     @Operation(summary = "Elimina un alimento por su ID")
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteFood(@PathVariable Long id) {
         foodService.deleteFood(id);
         return ResponseEntity.noContent().build();

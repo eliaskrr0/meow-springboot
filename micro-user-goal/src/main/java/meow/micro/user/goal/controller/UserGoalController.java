@@ -37,7 +37,7 @@ public class UserGoalController {
             @ApiResponse(responseCode = "404", description = "Alimento no encontrado")
     })
     @Operation(summary = "Actualiza el objetivo del usuario")
-    @PutMapping("/update/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<UserGoal> updateUserGoal(@PathVariable Long id, @Valid @RequestBody UserGoal goal) {
         goal.setIdUserGoal(id);
         UserGoal updatedGoal = service.updateUserGoal(goal);
