@@ -1,5 +1,6 @@
 package meow.micro.user.goal.service.impl;
 
+import feign.FeignException;
 import meow.common.dto.user.goal.enums.ActivityRate;
 import meow.common.dto.user.profile.enums.TypeGender;
 import meow.common.dto.user.goal.enums.TypeTarget;
@@ -33,13 +34,18 @@ public class UserGoalServiceImpl implements UserGoalService {
     @Override
     public UserGoal updateUserGoal(UserGoal userGoal) {
         if (userGoalRepository.existsById(userGoal.getIdUserGoal())) {
-            UserProfileDTO profile = userProfileClient.getProfile(userGoal.getIdUserProfile());
+            UserProfileDTO profile;
+            try {
+                profile = userProfileClient.getProfile(userGoal.getIdUserProfile());
+            } catch (FeignException e) {
+                throw new ResourceNotFoundException(userGoal.getIdUserProfile());
+            }
 
-            // Calculo de calorias
-            userGoal.setCaloriesTarget(calculateCalories(userGoal.getTypeTarget(), userGoal.getActivityRate(), profile));
+            // Cálculo de calorías
+            BigDecimal calories = calculateCalories(userGoal.getTypeTarget(), userGoal.getActivityRate(), profile);
 
-            // Calculo de macros
-            Macros macros = calculateMacros(userGoal.getTypeTarget(), userGoal.getActivityRate(), profile);
+            // Cálculo de macros reutilizando las calorías
+            Macros macros = calculateMacros(userGoal.getTypeTarget(), profile, calories);
             userGoal.setCaloriesTarget(macros.calories());
             userGoal.setProteinTarget(BigDecimal.valueOf(macros.proteinG()));
             userGoal.setCarbsTarget(BigDecimal.valueOf(macros.carbsG()));
@@ -73,8 +79,8 @@ public class UserGoalServiceImpl implements UserGoalService {
         return BigDecimal.valueOf(maintenance * factor).setScale(2, RoundingMode.HALF_UP);
     }
 
-    private Macros calculateMacros(TypeTarget target, ActivityRate activityRate, UserProfileDTO profile) {
-        double calories = calculateCalories(target, activityRate, profile).doubleValue();
+    private Macros calculateMacros(TypeTarget target, UserProfileDTO profile, BigDecimal calories) {
+        double caloriesValue = calories.doubleValue();
         double height = profile.getHeight();
         double weightKg = 22 * Math.pow(height / 100.0, 2);
 
@@ -100,7 +106,7 @@ public class UserGoalServiceImpl implements UserGoalService {
 
         double kcalFromProt = proteinG * 4.0;
         double kcalFromFat = fatG * 9.0;
-        double kcalLeft = calories - kcalFromProt - kcalFromFat;
+        double kcalLeft = caloriesValue - kcalFromProt - kcalFromFat;
 
         int minFatG = (int) Math.round(minFatPerKg * weightKg);
         int minProtG = (int) Math.round(minProtPerKg * weightKg);
@@ -112,7 +118,7 @@ public class UserGoalServiceImpl implements UserGoalService {
             fatG -= reduceFat;
 
             kcalFromFat = fatG * 9.0;
-            kcalLeft = calories - kcalFromProt - kcalFromFat;
+            kcalLeft = caloriesValue - kcalFromProt - kcalFromFat;
         }
         if (kcalLeft < 0) {
             int reducibleProt = Math.max(0, proteinG - minProtG);
@@ -121,13 +127,13 @@ public class UserGoalServiceImpl implements UserGoalService {
             proteinG -= reduceProt;
 
             kcalFromProt = proteinG * 4.0;
-            kcalLeft = calories - kcalFromProt - (fatG * 9.0);
+            kcalLeft = caloriesValue - kcalFromProt - (fatG * 9.0);
         }
 
         int carbsG = (int) Math.max(0, Math.round(kcalLeft / 4.0));
 
         return new Macros(
-                BigDecimal.valueOf(calories).setScale(0, RoundingMode.HALF_UP),
+                calories.setScale(0, RoundingMode.HALF_UP),
                 proteinG,
                 carbsG,
                 fatG

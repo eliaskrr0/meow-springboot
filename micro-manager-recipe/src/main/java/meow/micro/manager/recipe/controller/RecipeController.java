@@ -33,7 +33,7 @@ public class RecipeController {
 
     @Operation(summary = "Obtiene una receta por su nombre")
     @GetMapping("/search")
-    public ResponseEntity<List<Recipe>> searchRecipesByName(String name) {
+    public ResponseEntity<List<Recipe>> searchRecipesByName(@RequestParam String name) {
         return ResponseEntity.ok(recipeService.searchRecipesByName(name));
     }
 

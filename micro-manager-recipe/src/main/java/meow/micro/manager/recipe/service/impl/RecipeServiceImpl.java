@@ -35,16 +35,7 @@ public class RecipeServiceImpl implements RecipeService {
     @Transactional
     @Override
     public Recipe saveRecipe(Recipe recipe) {
-        if (recipe.getIngredients() != null) {
-            recipe.getIngredients().forEach(ingredient -> {
-                try {
-                    foodClient.getFoodById(ingredient.getIdFood());
-                } catch (FeignException e) {
-                    throw new ResourceNotFoundException(ingredient.getIdFood());
-                }
-                ingredient.setRecipe(recipe);
-            });
-        }
+        validateIngredients(recipe);
         return recipeRepository.save(recipe);
     }
 
@@ -118,16 +109,7 @@ public class RecipeServiceImpl implements RecipeService {
     @Override
     public Recipe updateRecipe(Recipe recipe) {
         if (recipeRepository.existsById(recipe.getIdRecipe())) {
-            if (recipe.getIngredients() != null) {
-                recipe.getIngredients().forEach(ingredient -> {
-                    try {
-                        foodClient.getFoodById(ingredient.getIdFood());
-                    } catch (FeignException e) {
-                        throw new ResourceNotFoundException(ingredient.getIdFood());
-                    }
-                    ingredient.setRecipe(recipe);
-                });
-            }
+            validateIngredients(recipe);
             return recipeRepository.save(recipe);
         } else {
             throw new ResourceNotFoundException(recipe.getIdRecipe());
@@ -140,6 +122,19 @@ public class RecipeServiceImpl implements RecipeService {
             recipeRepository.deleteById(idRecipe);
         } else {
             throw new ResourceNotFoundException(idRecipe);
+        }
+    }
+
+    private void validateIngredients(Recipe recipe) {
+        if (recipe.getIngredients() != null) {
+            recipe.getIngredients().forEach(ingredient -> {
+                try {
+                    foodClient.getFoodById(ingredient.getIdFood());
+                } catch (FeignException e) {
+                    throw new ResourceNotFoundException(ingredient.getIdFood());
+                }
+                ingredient.setRecipe(recipe);
+            });
         }
     }
 }

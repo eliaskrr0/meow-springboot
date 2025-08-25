@@ -1,5 +1,6 @@
 package meow.micro.user.goal.service.impl;
 
+import feign.FeignException;
 import meow.common.dto.user.goal.enums.ActivityRate;
 import meow.common.dto.user.goal.enums.TypeTarget;
 import meow.common.dto.user.profile.UserProfileDTO;
@@ -75,6 +76,20 @@ class UserGoalServiceImplTest {
 
         // Assert & Act
         assertThrows(ResourceNotFoundException.class, () -> userGoalServiceImpl.updateUserGoal(userGoal));
+    }
+
+    @Test
+    void updateUserGoal_whenProfileNotFound_throwException() {
+        // Arrange
+        UserGoal userGoal = getUserGoalList().getFirst();
+        when(userGoalRepository.existsById(userGoal.getIdUserGoal())).thenReturn(true);
+        when(userProfileClient.getProfile(userGoal.getIdUserProfile())).thenThrow(mock(FeignException.class));
+
+        // Act & Assert
+        assertThrows(ResourceNotFoundException.class, () -> userGoalServiceImpl.updateUserGoal(userGoal));
+        verify(userGoalRepository, times(1)).existsById(userGoal.getIdUserGoal());
+        verify(userProfileClient, times(1)).getProfile(userGoal.getIdUserProfile());
+        verify(userGoalRepository, never()).save(any());
     }
 
     @ParameterizedTest
