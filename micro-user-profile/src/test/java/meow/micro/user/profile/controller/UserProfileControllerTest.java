@@ -3,7 +3,7 @@ package meow.micro.user.profile.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import meow.common.dto.user.profile.enums.TypeGender;
 import meow.micro.user.profile.model.UserProfile;
-import meow.micro.user.profile.service.impl.UserProfileServiceImpl;
+import meow.micro.user.profile.service.UserProfileService;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
@@ -30,7 +30,7 @@ class UserProfileControllerTest {
     private ObjectMapper objectMapper;
 
     @Mock
-    private UserProfileServiceImpl service;
+    private UserProfileService service;
 
     @Test
     void getProfile_whenUserExists_shouldReturnProfile() throws Exception {
