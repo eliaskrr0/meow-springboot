@@ -1,14 +1,18 @@
 package meow.micro.user.profile.controller;
 
+import org.mockito.Mockito;
+import org.springframework.boot.test.context.TestConfiguration;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Import;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import meow.common.dto.user.profile.enums.TypeGender;
 import meow.micro.user.profile.model.UserProfile;
 import meow.micro.user.profile.service.UserProfileService;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
-import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.context.annotation.Primary;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -21,6 +25,7 @@ import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
+@Import(UserProfileControllerTest.Config.class)
 @WebMvcTest(UserProfileController.class)
 class UserProfileControllerTest {
     @Autowired
@@ -29,8 +34,17 @@ class UserProfileControllerTest {
     @Autowired
     private ObjectMapper objectMapper;
 
-    @Mock
+    @Autowired
     private UserProfileService service;
+
+    @TestConfiguration
+    static class Config {
+        @Bean
+        @Primary
+        UserProfileService userProfileService() {
+            return Mockito.mock(UserProfileService.class);
+        }
+    }
 
     @Test
     void getProfile_whenUserExists_shouldReturnProfile() throws Exception {
