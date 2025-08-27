@@ -13,7 +13,7 @@ spring:
             readTimeout: 5000
 
   datasource:
-    url: jdbc:postgresql://host.docker.internal:5432/meow
+    url: jdbc:postgresql://postgres-db:5432/meow
     username: survidia
     password: survidia123
 
@@ -39,4 +39,4 @@ spring:
 
 external:
   user-profile-service:
-    url: http://localhost:8082
+    url: http://micro-user-profile:8082

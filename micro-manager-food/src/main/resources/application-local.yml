@@ -6,7 +6,7 @@ spring:
     name: micro-manager-food
 
   datasource:
-    url: jdbc:postgresql://host.docker.internal:5432/meow
+    url: jdbc:postgresql://postgres-db:5432/meow
     username: survidia
     password: survidia123
 

@@ -5,12 +5,18 @@ services:
     restart: unless-stopped
     environment:
       POSTGRES_DB: meow
-      POSTGRES_USER: survividia
-      POSTGRES_PASSWORD: survivial123
+      POSTGRES_USER: survidia
+      POSTGRES_PASSWORD: survidia123
     ports:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
+    networks:
+      - meow-network
 
 volumes:
   postgres_data:
+
+networks:
+  meow-network:
+    name: meow-network

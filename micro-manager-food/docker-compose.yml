@@ -1,13 +1,17 @@
 services:
-        micro-manager-food:
-                image: micro-manager-food:latest
-                build:
-                        context: .
-                        dockerfile: Dockerfile
-                env_file:
-                        - .env
-                environment:
-                        - SPRING_PROFILES_ACTIVE=local
-                ports:
-                        - "8080:8080"
-                restart: unless-stopped
+  micro-manager-food:
+    image: micro-manager-food:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      - SPRING_PROFILES_ACTIVE=local
+    ports:
+      - "8080:8080"
+    restart: unless-stopped
+    networks:
+      - meow-network
+
+networks:
+  meow-network:
+    external: true
