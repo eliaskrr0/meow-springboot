@@ -6,6 +6,7 @@ services:
       dockerfile: Dockerfile
     environment:
       - SPRING_PROFILES_ACTIVE=local
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres-db:5432/meow
     ports:
       - "8081:8081"
     restart: unless-stopped

@@ -2,6 +2,7 @@ services:
   postgres:
     image: postgres:17.4
     container_name: postgres-db
+    hostname: postgres-db
     restart: unless-stopped
     environment:
       POSTGRES_DB: meow
