@@ -1,0 +1,1 @@
+INSERT INTO tb_user_profile (gender, name, age, height, weight) VALUES ('Masculino', 'Elias', 24, 173, 73);

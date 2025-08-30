@@ -9,10 +9,10 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>meow</groupId>
-    <artifactId>micro-user-profile</artifactId>
+    <artifactId>micro-manager-recipe</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>micro-user-profile</name>
-    <description>micro-user-profile</description>
+    <name>micro-manager-recipe</name>
+    <description>micro-manager-recipe</description>
     <url/>
     <licenses>
         <license/>
@@ -63,6 +63,17 @@
             <artifactId>commons-lang3</artifactId>
             <version>3.18.0</version>
         </dependency>
+        <dependency>
+            <groupId>org.testcontainers</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.testcontainers</groupId>
+            <artifactId>postgresql</artifactId>
+            <scope>test</scope>
+        </dependency>
+
         <dependency>
             <groupId>org.springdoc</groupId>
             <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
