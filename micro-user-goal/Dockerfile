@@ -1,4 +1,8 @@
+FROM eclipse-temurin:21-jdk as build
+WORKDIR /app
+COPY . .
+RUN chmod +x mvnw && ./mvnw package -DskipTests
+
 FROM eclipse-temurin:21-jre-alpine
-ARG JAR_FILE=target/*.jar
-COPY ${JAR_FILE} app.jar
+COPY --from=build target/*.jar app.jar
 ENTRYPOINT ["java", "-jar", "/app.jar"]
