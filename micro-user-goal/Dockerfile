@@ -1,11 +1,16 @@
-FROM eclipse-temurin:21-jdk as build
+FROM eclipse-temurin:21-jdk AS build
 WORKDIR /app
-COPY common-dto common-dto
-COPY micro-user-goal micro-user-goal
+
+# Copiamos los dos módulos que usa este micro
+COPY common-dto/ common-dto/
+COPY micro-user-goal/ micro-user-goal/
+
+# Ejecuta Maven DENTRO de cada carpeta
 RUN chmod +x common-dto/mvnw micro-user-goal/mvnw \
-    && common-dto/mvnw install -DskipTests \
-    && micro-user-goal/mvnw package -DskipTests
+ && cd /app/common-dto && ./mvnw -B -DskipTests install \
+ && cd /app/micro-user-goal && ./mvnw -B -DskipTests package
 
 FROM eclipse-temurin:21-jre-alpine
-COPY --from=build micro-user-goal/target/*.jar app.jar
-ENTRYPOINT ["java", "-jar", "/app.jar"]
+WORKDIR /app
+COPY --from=build /app/micro-user-goal/target/*.jar app.jar
+ENTRYPOINT ["java","-jar","/app/app.jar"]

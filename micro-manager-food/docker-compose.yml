@@ -2,8 +2,8 @@ services:
   micro-manager-food:
     image: micro-manager-food:latest
     build:
-      context: .
-      dockerfile: Dockerfile
+      context: ..
+      dockerfile: micro-manager-food/Dockerfile
     environment:
       - SPRING_PROFILES_ACTIVE=local
       - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres-db:5432/meow

@@ -2,8 +2,8 @@ services:
   micro-user-profile:
     image: micro-user-profile:latest
     build:
-      context: .
-      dockerfile: Dockerfile
+      context: ..
+      dockerfile: micro-user-profile/Dockerfile
     environment:
       - SPRING_PROFILES_ACTIVE=local
       - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres-db:5432/meow

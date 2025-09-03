@@ -1,11 +1,16 @@
-FROM eclipse-temurin:21-jdk as build
+FROM eclipse-temurin:21-jdk AS build
 WORKDIR /app
-COPY common-dto common-dto
-COPY micro-manager-recipe micro-manager-recipe
+
+# Copiamos los dos módulos que usa este micro
+COPY common-dto/ common-dto/
+COPY micro-manager-recipe/ micro-manager-recipe/
+
+# Ejecuta Maven DENTRO de cada carpeta
 RUN chmod +x common-dto/mvnw micro-manager-recipe/mvnw \
-    && common-dto/mvnw install -DskipTests \
-    && micro-manager-recipe/mvnw package -DskipTests
+ && cd /app/common-dto && ./mvnw -B -DskipTests install \
+ && cd /app/micro-manager-recipe && ./mvnw -B -DskipTests package
 
 FROM eclipse-temurin:21-jre-alpine
-COPY --from=build micro-manager-recipe/target/*.jar app.jar
-ENTRYPOINT ["java", "-jar", "/app.jar"]
+WORKDIR /app
+COPY --from=build /app/micro-manager-recipe/target/*.jar app.jar
+ENTRYPOINT ["java","-jar","/app/app.jar"]
