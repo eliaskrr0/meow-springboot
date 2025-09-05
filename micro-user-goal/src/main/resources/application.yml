@@ -1,3 +1,46 @@
+server:
+  port: 8083
+
 spring:
-  profiles:
-    active: local
+  application:
+    name: micro-user-goal
+  cloud:
+    openfeign:
+      client:
+        config:
+          default:
+            connectTimeout: 5000
+            readTimeout: 5000
+
+  app:
+    env-guard: ${ENV_GUARD:false} # Se pone por defecto como false para no romper PROD. Esta propiedad sirve para que solo usemos el entorno local
+
+  datasource:
+    url: ${DB_URL}
+    username: ${DB_USER}
+    password: ${DB_PASS}
+
+  jpa:
+    generate-ddl: false
+    open-in-view: false # Evita el renderizado de HTML
+    hibernate:
+      ddl-auto: none
+    show-sql: ${SHOW_SQL:false}  # En producción se suele desactivar
+
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        default_schema: ${DB_SCHEMA}
+
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+    schemas: ${DB_SCHEMA}
+    table: ${FLYWAY_TABLE_HISTORY_NAME}
+    baseline-on-migrate: true
+    baseline-version: 0    # Ajustar según la versión inicial requerida
+    validate-on-migrate: true
+
+external:
+  user-profile-service:
+    url: ${FEIGN_RECIPE_URL}

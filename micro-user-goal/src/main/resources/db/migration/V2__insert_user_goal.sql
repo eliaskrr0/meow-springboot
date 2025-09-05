@@ -1,1 +1,1 @@
-INSERT INTO tb_user_goal (protein_target, carbs_target, fat_target, calories_target, id_user_profile, type_target, activity_rate) VALUES (150.00, 250.00, 70.00, 2500.00, 1, 'cutting', 'high');
+INSERT INTO tb_user_goal (protein_target, carbs_target, fat_target, calories_target, id_user_profile, type_target, activity_rate) VALUES (0, 0, 0, 0, 1, 'Mantener peso', 'Sedentario');

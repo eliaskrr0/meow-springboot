@@ -4,9 +4,10 @@ services:
     build:
       context: ..
       dockerfile: micro-user-goal/Dockerfile
+    env_file:
+      - .env.local
     environment:
       - SPRING_PROFILES_ACTIVE=local
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres-db:5432/meow
     ports:
       - "8083:8083"
     restart: unless-stopped

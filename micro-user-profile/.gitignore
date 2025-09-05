@@ -33,5 +33,7 @@ build/
 .vscode/
 
 ### Otros ###
-.env
+.env.local
+.env.dev
+.env.prod
 
