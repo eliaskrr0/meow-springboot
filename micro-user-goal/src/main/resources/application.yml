@@ -12,9 +12,6 @@ spring:
             connectTimeout: 5000
             readTimeout: 5000
 
-  app:
-    env-guard: ${APP_ENV_GUARD :false} # Se pone por defecto como false para no romper PROD. Esta propiedad sirve para que solo usemos el entorno local
-
   datasource:
     url: jdbc:postgresql://${DB_HOST}:${DB_PORT}/${DB_NAME}
     username: ${DB_USER}
@@ -44,3 +41,6 @@ spring:
 external:
   user-profile-service:
     url: ${FEIGN_USER_PROFILE_URL}
+
+app:
+  env-guard: ${ENV_GUARD:false} # Se pone por defecto como false para no romper PROD. Esta propiedad sirve para que solo usemos el entorno local

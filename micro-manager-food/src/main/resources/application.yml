@@ -5,9 +5,6 @@ spring:
   application:
     name: micro-manager-food
 
-  app:
-    env-guard: ${APP_ENV_GUARD :false} # Se pone por defecto como false para no romper PROD. Esta propiedad sirve para que solo usemos el entorno local
-
   datasource:
     url: jdbc:postgresql://${DB_HOST}:${DB_PORT}/${DB_NAME}
     username: ${DB_USER}
@@ -33,3 +30,6 @@ spring:
     baseline-on-migrate: true
     baseline-version: 0    # Ajustar según la versión inicial requerida
     validate-on-migrate: true
+
+app:
+  env-guard: ${ENV_GUARD:false} # Se pone por defecto como false para no romper PROD. Esta propiedad sirve para que solo usemos el entorno local
