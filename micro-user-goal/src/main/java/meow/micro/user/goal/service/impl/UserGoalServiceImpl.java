@@ -11,11 +11,13 @@ import meow.micro.user.goal.model.UserGoal;
 import meow.micro.user.goal.repository.UserGoalRepository;
 import meow.micro.user.goal.service.UserGoalService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
 @Service
+@Transactional
 public class UserGoalServiceImpl implements UserGoalService {
     private final UserGoalRepository userGoalRepository;
     private final UserProfileClient userProfileClient;
@@ -27,6 +29,7 @@ public class UserGoalServiceImpl implements UserGoalService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public UserGoal getUserGoalById(Long id) {
         return userGoalRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException(id));
     }

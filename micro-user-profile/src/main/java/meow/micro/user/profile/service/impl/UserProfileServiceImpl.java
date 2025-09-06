@@ -5,6 +5,7 @@ import meow.micro.user.profile.model.UserProfile;
 import meow.micro.user.profile.repository.UserProfileRepository;
 import meow.micro.user.profile.service.UserProfileService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class UserProfileServiceImpl implements UserProfileService {
@@ -15,6 +16,7 @@ public class UserProfileServiceImpl implements UserProfileService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public UserProfile findById(Long id) {
         return repository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(id));

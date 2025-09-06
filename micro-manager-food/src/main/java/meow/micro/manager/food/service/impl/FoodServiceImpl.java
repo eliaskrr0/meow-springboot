@@ -5,10 +5,12 @@ import meow.micro.manager.food.model.Food;
 import meow.micro.manager.food.repository.FoodRepository;
 import meow.micro.manager.food.service.FoodService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
+@Transactional
 public class FoodServiceImpl implements FoodService {
     private final FoodRepository foodRepository;
 
@@ -22,16 +24,19 @@ public class FoodServiceImpl implements FoodService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Food> getAllFoods() {
         return foodRepository.findAll();
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Food getFoodById(Long id) {
         return foodRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException(id));
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Food> searchFoodByName(String name) {
         return foodRepository.findByNameContainingIgnoreCase(name);
     }
